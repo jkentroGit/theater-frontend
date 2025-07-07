@@ -1,0 +1,83 @@
+<div class="d-flex flex-column mt-2 w-50">
+
+    <form [formGroup]="form" class="d-flex flex-column">
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error>To username είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Όνομα</mat-label>
+            <input matInput type="text" formControlName="firstname">
+            <mat-error>To όνομα είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Επίθετο</mat-label>
+            <input matInput type="text" formControlName="lastname">
+            <mat-error>To επίθετο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <div formGroupName="address">
+            <div class="d-flex gap-2">
+                <mat-form-field class="w-100">
+                <mat-label>Οδός</mat-label>
+                <input matInput type="text" formControlName="street">
+                <mat-error>Η οδός είναι υποχρεωτική</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Νούμερο</mat-label>
+                <input matInput type="text" formControlName="streetNum">
+                <mat-error>Το νούμερο είναι υποχρεωτικό</mat-error>
+            </mat-form-field>
+            </div>
+            <div class="d-flex gap-2">
+            <mat-form-field class="w-100">
+                <mat-label>Πόλη</mat-label>
+                <input matInput type="text" formControlName="city">
+                <mat-error>Η πόλη είναι υποχρεωτική</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>ΤΚ</mat-label>
+                <input matInput type="text" formControlName="tk">
+                <mat-error>Ο ΤΚ είναι υποχεωτικός</mat-error>
+            </mat-form-field>
+            </div>       
+       </div>
+       <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error>To email είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Κινητό</mat-label>
+            <input matInput type="text" formControlName="mobile">
+            <mat-error>To kinht;o είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error>Το password δεν είναι έγκυρο</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Confirm password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error>Το password δεν είναι έγκυρο</mat-error>
+                                 
+        </mat-form-field>
+
+        <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid"
+        (click)="onSubmit()"
+        >Register
+      </button>
+      
+    </form>
+
+</div>

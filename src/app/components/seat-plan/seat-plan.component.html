@@ -1,0 +1,19 @@
+<div class="flex text-center">
+  <div *ngFor="let row of seatingPlan">
+    <div>
+      <span >Row {{ row.rowNumber }}</span>      
+      <ng-container *ngFor="let seat of row.seats">
+        <button
+          mat-icon-button
+         [disabled]=""
+          (click)="handleSeatStatus(seat)">
+          <mat-icon class={{getSeatColour(seat.status)}}>{{ getSeatIcon(seat.status) }}</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+<button class="mt-4" mat-raised-button color="primary" (click)="onClickHandler()">
+  Κράτηση θέσεων
+</button>
+
+</div>
