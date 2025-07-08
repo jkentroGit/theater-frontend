@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Show } from '../../shared/interfaces/show';
+import { Show } from '../shared/interfaces/show';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -12,21 +12,17 @@ export class ShowService {
 
   constructor(private http: HttpClient) {}
 
-  // // Get all shows
-  // getAllShows(): Observable<{ status: boolean; data: Show[] }> {
-  //   return this.http.get<{ status: boolean; data: Show[] }>(this.baseUrl);
-  // }
+  getAllShows(): Observable<{ status: boolean; data: Show[] }> {
+    return this.http.get<{ status: boolean; data: Show[] }>(this.baseUrl);
+  }
 
   getShowById(id: string): Observable<{ status: boolean; data: Show }> {
     return this.http.get<{ status: boolean; data: Show }>(`${this.baseUrl}/${id}`);
   }
 
   // // Create a new show
-  // createShow(showData: Partial<Show>): Observable<any> {
-  //   return this.http.post(this.baseUrl, showData);
-  // }
 
-  // Update seat statuses for a show
+
   updateSeats(showId: string, seatsToUpdate: { label: string; status: string }[]): Observable<any> {
   const token = localStorage.getItem('token') || '';
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -38,8 +34,7 @@ export class ShowService {
   );
 }
 
-  // // Delete a show by ID
-  // deleteShow(showId: string): Observable<any> {
-  //   return this.http.delete(`${this.baseUrl}/${showId}`);
-  // }
+  deleteShow(showId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${showId}`);
+  }
 }

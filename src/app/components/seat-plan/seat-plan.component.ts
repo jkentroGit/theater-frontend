@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShowService } from '../services/show.service';
+import { ShowService } from '../../services/show.service';
 import { Row, Seat } from '../../shared/interfaces/row-seat';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';

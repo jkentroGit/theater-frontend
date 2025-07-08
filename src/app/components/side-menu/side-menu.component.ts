@@ -11,7 +11,8 @@ export class SideMenuComponent {
   menu = [
      { text: 'Login', linkName: 'app-login'},
      { text: 'Εγγραφή χρήστη', linkName:'app-register'},
-     { text: 'Πλάνο θέσεων', linkName: 'app-seat-plan'}
+     { text: 'Πλάνο θέσεων', linkName: 'app-seat-plan'},
+     { text: 'Προσθήκη έργου', linkName: 'app-play'}
    
     ]
 }
