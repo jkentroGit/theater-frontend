@@ -12,7 +12,8 @@ export class SideMenuComponent {
      { text: 'Login', linkName: 'app-login'},
      { text: 'Εγγραφή χρήστη', linkName:'app-register'},
      { text: 'Πλάνο θέσεων', linkName: 'app-seat-plan'},
-     { text: 'Προσθήκη έργου', linkName: 'app-play'}
+     { text: 'Προσθήκη έργου', linkName: 'app-play'},
+     { text: 'Προσθήκη παραστάσεων', linkName: 'app-show'}
    
     ]
 }

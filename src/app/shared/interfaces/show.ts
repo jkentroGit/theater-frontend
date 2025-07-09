@@ -3,10 +3,10 @@ import { Row } from "./row-seat";
 
 
 export interface Show {
-  playId: string;
-  daysOfWeek: string[];
-  time: string;
-  showDate: string;
-  price: number;
+  _id?: String,
+  playId: String;
+  time: String;
+  showDate: Date;
+  price: Number;
   rows: Row[];
 }
