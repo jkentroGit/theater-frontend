@@ -1,1 +1,47 @@
-<p>play-list works!</p>
+<ng-container>
+  <mat-card *ngFor="let play of plays" class="mb-2">
+    <mat-card-title class="m-4">
+      <strong>{{ play.title }}</strong> ({{ play.year }})
+    </mat-card-title>
+
+    <mat-card-content class="m-2">
+      <p *ngIf="isAdmin"><strong>Code:</strong> {{ play.code }}</p>
+      <p><strong>Director:</strong> {{ play.director }}</p>
+      <p
+        matTooltip="{{ play.cast }}"
+        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; cursor: pointer;"
+      >
+        <strong>Cast:</strong> {{ play.cast }}
+      </p>
+      <p><strong>Duration:</strong> {{ play.duration }} mins</p>
+    </mat-card-content>
+
+<mat-card-actions class="m-2">
+  <!-- Spacer pushes buttons to right -->
+
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="isAdmin"
+    (click)="onEditPlay(play)"
+  >
+    Edit Play
+  </button>
+
+  <button
+    mat-raised-button
+    color="warn"
+    *ngIf="isAdmin"
+    (click)="onDeletePlay(play)"
+  >
+    Delete Play
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onFindShow(play)"
+  >
+    Find Show
+  </button>
+</mat-card-actions>

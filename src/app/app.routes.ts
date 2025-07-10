@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SeatPlanComponent } from './components/seat-plan/seat-plan.component';
 import { PlayComponent } from './components/play/play.component';
 import { ShowComponent } from './components/show/show.component';
+import { PlayListComponent } from './components/play-list/play-list.component';
 
 
 export const routes: Routes = [
@@ -11,5 +12,7 @@ export const routes: Routes = [
     { path:'app-register', component:RegisterComponent },
     { path: 'app-seat-plan', component:SeatPlanComponent},
     { path: 'app-play', component:PlayComponent},
-    { path: 'app-show', component:ShowComponent}
+    { path: 'app-show', component:ShowComponent},
+    { path: 'app-play-list', component:PlayListComponent}
 ];
+

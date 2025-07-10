@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, linkedSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -13,7 +13,8 @@ export class SideMenuComponent {
      { text: 'Εγγραφή χρήστη', linkName:'app-register'},
      { text: 'Πλάνο θέσεων', linkName: 'app-seat-plan'},
      { text: 'Προσθήκη έργου', linkName: 'app-play'},
-     { text: 'Προσθήκη παραστάσεων', linkName: 'app-show'}
+     { text: 'Προσθήκη παραστάσεων', linkName: 'app-show'},
+     { text: 'Λίστα έργων', linkName: 'app-play-list'}
    
     ]
 }
