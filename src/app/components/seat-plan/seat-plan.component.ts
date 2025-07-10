@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import {jwtDecode} from 'jwt-decode';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 interface DecodedToken {
   role: string;
@@ -13,7 +14,7 @@ interface DecodedToken {
 @Component({
   selector: 'app-seat-plan',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule,MatSnackBarModule],
   templateUrl: './seat-plan.component.html',
   styleUrls: ['./seat-plan.component.css']
 })
@@ -22,7 +23,7 @@ export class SeatPlanComponent {
   showId = '68663b26de22c99fc87a3b2d'; 
   isAdmin: boolean = false;
 
-  constructor(private showService: ShowService) {}
+  constructor(private showService: ShowService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.loadSeatingPlan();
@@ -128,8 +129,20 @@ onClickHandler() {
   }
   
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
-    next: (res) => console.log('Seats updated successfully', res),
-    error: (err) => console.error('Error updating seats', err)
+    next: (res) => {
+      this.snackBar.open('Seat(s) reserved successfully', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        
+      });},
+    error: (err) => {
+      this.snackBar.open('Seat(s) not reserved', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+       
+      });}
   });
 }
 }

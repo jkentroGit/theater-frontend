@@ -11,6 +11,7 @@ import {
 import { Play } from '../../shared/interfaces/play';
 import { HttpClient } from '@angular/common/http';
 import { PlayService } from '../../services/play.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,7 +21,8 @@ import { PlayService } from '../../services/play.service';
     MatButtonModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './play.component.html',
   styleUrl: './play.component.css'
@@ -28,7 +30,7 @@ import { PlayService } from '../../services/play.service';
 export class PlayComponent {
 
     private http = inject(HttpClient);
-    constructor(private playService: PlayService) {}
+    constructor(private playService: PlayService, private snackBar: MatSnackBar) {}
 
    form =new FormGroup ({
     code: new FormControl ('', [Validators.required]),
@@ -49,9 +51,22 @@ onSubmit() {
       'cast':this.form.get('cast')?.value || '',
       'duration': this.form.get('duration')?.value || ''}
 
-        this.playService.createPlay(playData).subscribe({
-       next: (res) => console.log('Play added successfully', res),
-      error: (err) => console.error('Error creating play', err)
+      this.playService.createPlay(playData).subscribe({
+      next: (res) => {
+        this.snackBar.open('Play submitted successfully', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        
+      });
+      this.form.reset();},
+      error: (err) => {
+        this.snackBar.open('Play failed to submit', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+       
+      });}
   });
 };
 

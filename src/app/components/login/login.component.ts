@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { Credentials } from '../../shared/interfaces/credentials';
 import { HttpClient } from '@angular/common/http'; 
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ import { HttpClient } from '@angular/common/http';
     MatButtonModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -26,6 +28,7 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent {
 
   private http = inject(HttpClient);
+  constructor(private snackBar: MatSnackBar) {}
 
   form = new FormGroup ({
     username: new FormControl ('', Validators.required),
@@ -41,11 +44,24 @@ onSubmit() {
 
     this.http.post<any>('http://localhost:3000/api/auth', data).subscribe({
       next: (response) => {
-        console.log('Success:', response);
+        this.snackBar.open('Login successfully', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+
+      });
+      this.form.reset();
         localStorage.setItem('token', response.data);      
       },
       
-      error: (err) => console.error('Error:', err)
+      error: (err) => { 
+        this.snackBar.open('Login failed', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        
+      });
+      this.form.reset();}
     });
   }
 };

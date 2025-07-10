@@ -7,7 +7,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClient } from '@angular/common/http';
-import { Play } from '../../shared/interfaces/play';
 import { PlayService } from '../../services/play.service';
 import { ShowService } from '../../services/show.service';
 import { 
@@ -17,7 +16,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Show } from '../../shared/interfaces/show';
-import { Row } from '../../shared/interfaces/row-seat';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-show',
@@ -31,6 +30,7 @@ import { Row } from '../../shared/interfaces/row-seat';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSnackBarModule
   ],
   templateUrl: './show.component.html',
   styleUrl: './show.component.css'
@@ -39,7 +39,7 @@ export class ShowComponent {
 
 
 private http = inject(HttpClient);
-constructor(private playService: PlayService, private showService: ShowService) {}
+constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar) {}
 
 
 days = [
@@ -97,13 +97,31 @@ onSubmit() {
           };       
 
           this.showService.createShow(showData).subscribe({
-           next: (res) => console.log('Show added successfully', res),
-           error: (err) => console.error('Error creating show', err)
+           next: (res) => {
+            this.snackBar.open('Shows added successfully!', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+      });
+      this.form.reset();
+           },
+           error: (err) => {
+            this.snackBar.open('Failed to add shows', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            
+      });}
           });
         }
       }
-    }, error: (err) => {console.error('Error fetching play:', err);
-    }
+    }, error: (err) => {
+            this.snackBar.open('Failed to find play', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            
+      });}
   });
 }
 }

@@ -9,7 +9,8 @@ import {
   Validators 
 } from '@angular/forms';
 import { User } from '../../shared/interfaces/user';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ import { HttpClient } from '@angular/common/http';
     MatButtonModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -26,6 +28,7 @@ import { HttpClient } from '@angular/common/http';
 export class RegisterComponent {
 
     private http = inject(HttpClient);
+    constructor(private snackBar: MatSnackBar) {}
 
    form =new FormGroup ({
     username: new FormControl ('', [Validators.required]),
@@ -59,8 +62,24 @@ onSubmit() {
       'password': this.form.get('password')?.value || ''}
 
        this.http.post('http://localhost:3000/api/users', data).subscribe({
-      next: (response) => console.log('Success:', response),
-      error: (err) => console.error('Error:', err)
+      next: (response) => {
+        
+        this.snackBar.open('Registration successfull', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+       
+      });
+      this.form.reset();
+    },
+      error: (err) => {
+        this.snackBar.open('Registration failed', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        
+      });
+      this.form.reset();}
     });
 };
 
