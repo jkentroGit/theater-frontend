@@ -43,6 +43,7 @@ export class PlayComponent {
   );
 
 onSubmit() {
+
   const playData: Play = {
       'code': this.form.get('code')?.value || '',
       'title': this.form.get('title')?.value || '',
@@ -51,24 +52,46 @@ onSubmit() {
       'cast':this.form.get('cast')?.value || '',
       'duration': this.form.get('duration')?.value || ''}
 
-      this.playService.createPlay(playData).subscribe({
-      next: (res) => {
-        this.snackBar.open('Play submitted successfully', 'Close', {
+      
+       this.playService.getPlayByCode(playData.code).subscribe({
+      next: () => {
+    
+      this.snackBar.open('A play with this code already exists', 'Close', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-        
       });
-      this.form.reset();},
-      error: (err) => {
-        this.snackBar.open('Play failed to submit', 'Close', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-       
-      });}
+    },
+       error: (err) => {
+     
+      if (err.status === 404) {
+        //Δεν βρέθηκε
+        this.playService.createPlay(playData).subscribe({
+          next: () => {
+            this.snackBar.open('Play submitted successfully', '', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+            this.form.reset();
+          },
+          error: () => {
+            this.snackBar.open('Play failed to submit', '', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            });
+          }
+        });
+      } else {
+        this.snackBar.open('An error occurred', '', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+        });
+      }
+    }
   });
-};
 
 }
-
+}

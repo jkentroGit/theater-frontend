@@ -1,0 +1,50 @@
+<div class="d-flex flex-column mt-2 w-50">
+
+    <form [formGroup]="form" class="d-flex flex-column">
+        <mat-form-field>
+            <mat-label>Κωδικός</mat-label>
+            <input matInput type="text" formControlName="code">
+            <mat-error>O κωδικός είναι υποχρεωτικός</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Τίτλος</mat-label>
+            <input matInput type="text" formControlName="title">
+            <mat-error>Το πεδίο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Έτος</mat-label>
+            <input matInput type="text" formControlName="year">
+            <mat-error>Το πεδίο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+       <mat-form-field>
+            <mat-label>Σκηνοθέτης</mat-label>
+            <input matInput type="email" formControlName="director">
+            <mat-error>Το πεδίο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Συντελεστές</mat-label>
+            <input matInput type="text" formControlName="cast">
+            <mat-error>Το πεδίο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Διάρκεια</mat-label>
+            <input matInput type="text" formControlName="duration">
+            <mat-error>Το πεδίο είναι υποχρεωτικό</mat-error>
+        </mat-form-field>
+
+        <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid"
+        (click)="onSubmit()"
+        >Register
+      </button>
+      
+    </form>
+
+</div>

@@ -31,8 +31,15 @@ export class PlayService {
   return this.http.post<{ status: boolean; data: Play }>(this.baseUrl, showData, { headers } );
   };
 
+  updatePlay(code: string, playData: Play): Observable<any> {
+  const token = localStorage.getItem('token') || '';
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.put(`${this.baseUrl}/${code}`, playData, { headers });
+}
 
-  deletePlay(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  deletePlay(code: string): Observable<any> {
+  const token = localStorage.getItem('token') || '';
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.delete(`${this.baseUrl}/${code}`);
   };
 }
