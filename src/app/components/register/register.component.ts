@@ -11,6 +11,7 @@ import {
 import { User } from '../../shared/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class RegisterComponent {
 
     private http = inject(HttpClient);
-    constructor(private snackBar: MatSnackBar) {}
+    constructor(private snackBar: MatSnackBar, private router: Router) {}
 
    form =new FormGroup ({
     username: new FormControl ('', [Validators.required]),
@@ -70,7 +71,7 @@ onSubmit() {
         verticalPosition: 'bottom',
        
       });
-      this.form.reset();
+      this.router.navigate(['app-login']);
     },
       error: (err) => {
         this.snackBar.open('Registration failed', '', {

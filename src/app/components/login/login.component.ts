@@ -11,6 +11,7 @@ import {
 import { Credentials } from '../../shared/interfaces/credentials';
 import { HttpClient } from '@angular/common/http'; 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,13 +29,19 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class LoginComponent {
 
   private http = inject(HttpClient);
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   form = new FormGroup ({
     username: new FormControl ('', Validators.required),
     password: new FormControl ('', Validators.required)
   }
 );
+
+register() {
+
+this.router.navigate(['app-register']);  
+
+}
 
 onSubmit() {
   const data: Credentials = {
@@ -51,7 +58,8 @@ onSubmit() {
 
       });
       this.form.reset();
-        localStorage.setItem('token', response.data);      
+      localStorage.setItem('token', response.data);
+      this.router.navigate(['/app-play-list']);  
       },
       
       error: (err) => { 
