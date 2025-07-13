@@ -6,6 +6,7 @@ import { PlayComponent } from './components/play/play.component';
 import { ShowComponent } from './components/show/show.component';
 import { PlayListComponent } from './components/play-list/play-list.component';
 import { PlayEditComponent } from './components/play-edit/play-edit.component';
+import { ShowListComponent } from './components/show-list/show-list.component';
 
 
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'app-play', component:PlayComponent},
     { path: 'app-show', component:ShowComponent},
     { path: 'app-play-list', component:PlayListComponent},
-    { path: 'play/edit/:code', component: PlayEditComponent}
+    { path: 'play/edit/:code', component: PlayEditComponent},
+    { path: 'show/find/:code', component: ShowListComponent}
 ];
 

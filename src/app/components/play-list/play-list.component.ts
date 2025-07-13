@@ -81,8 +81,8 @@ export class PlayListComponent {
   });
 }
 
-  onFindShow(play: Play) {
-
- 
+  onFindShow(play: Play) {{
+  this.router.navigate(['/show/find', play.code]);
+  } 
 }
 }
