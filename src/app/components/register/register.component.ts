@@ -3,6 +3,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { 
+  AbstractControl,
   FormControl, 
   FormGroup, 
   ReactiveFormsModule, 
@@ -36,7 +37,7 @@ export class RegisterComponent {
    form =new FormGroup ({
     username: new FormControl ('', [Validators.required]),
     password: new FormControl ('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl ('', [Validators.required]),
+    confirmPassword: new FormControl ('', [Validators.required, Validators.minLength(8)]),
     firstname: new FormControl ('', Validators.required),
     lastname: new FormControl ('', Validators.required),
     address: new FormGroup ({
@@ -46,11 +47,24 @@ export class RegisterComponent {
       tk: new FormControl ('', Validators.required)
     }),
     mobile: new FormControl ('', [Validators.required]),
-    email: new FormControl ('', [Validators.required, Validators.email]),    
-  }
-  );
+    email: new FormControl ('', [Validators.required, Validators.email]),
 
-  passwordNotMatch = false;
+  },this.passwordConfirmValidator,
+
+  );
+  passwordConfirmValidator(control: AbstractControl): {[key:string]: boolean} | null {
+    const form = control as FormGroup;
+    
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value
+
+    if(password && confirmPassword && password!==confirmPassword) {
+      form.get('confirmPassword')?.setErrors({passwordMismatch: true})
+      return {passwordMismatch: true}
+    }
+    
+    return null
+  }
 
 onSubmit() {
   const data: User = {
