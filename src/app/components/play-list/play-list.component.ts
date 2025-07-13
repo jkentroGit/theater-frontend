@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component,  inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayService } from '../../services/play.service';
 import { MatCardModule } from '@angular/material/card';
@@ -71,7 +71,7 @@ export class PlayListComponent {
     next: () => {
     this.snackBar.open('Play deleted successfully', '', { duration: 3000 });
     
-     this.loadAllPlays();
+    this.loadAllPlays();
 
 
     },
@@ -82,6 +82,7 @@ export class PlayListComponent {
 }
 
   onFindShow(play: Play) {
+
  
 }
 }

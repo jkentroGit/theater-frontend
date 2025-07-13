@@ -33,10 +33,11 @@ export class PlayEditComponent {
 
     private http = inject(HttpClient);
     constructor(private playService: PlayService, private snackBar: MatSnackBar, 
-      private route: ActivatedRoute, private router: Router) {}
+    private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
+
     if (code) {
       this.playService.getPlayByCode(code).subscribe({
         next: (res) => {
@@ -44,12 +45,11 @@ export class PlayEditComponent {
           this.form.get('code')?.disable();
         },
         error: () => {
-          this.snackBar.open('Play not found', 'Close', { duration: 3000 });
+          this.snackBar.open('Το έργο δεν βρέθηκε', '', { duration: 3000 });
         }
       });
     }
   }
-
 
    form =new FormGroup ({
     code: new FormControl ('', [Validators.required]),
@@ -77,11 +77,11 @@ onSubmit() {
 
     this.playService.updatePlay(playData.code, playData).subscribe({
       next: () => {
-        this.snackBar.open('Play updated successfully', '', { duration: 3000 });
+        this.snackBar.open('Το έργο κατωχηρώθηκε επιτυχημένα', '', { duration: 3000 });
         this.router.navigate(['/app-play-list']);
       },
       error: () => {
-        this.snackBar.open('Failed to update play', '', { duration: 3000 });
+        this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', { duration: 3000 });
       }
     });
   }

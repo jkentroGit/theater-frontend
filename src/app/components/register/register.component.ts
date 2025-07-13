@@ -12,6 +12,7 @@ import { User } from '../../shared/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ import { Router } from '@angular/router';
     MatFormFieldModule, 
     MatInputModule, 
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CommonModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -34,7 +36,7 @@ export class RegisterComponent {
    form =new FormGroup ({
     username: new FormControl ('', [Validators.required]),
     password: new FormControl ('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl ('', [Validators.required, Validators.minLength(8)]),
+    confirmPassword: new FormControl ('', [Validators.required]),
     firstname: new FormControl ('', Validators.required),
     lastname: new FormControl ('', Validators.required),
     address: new FormGroup ({
@@ -44,9 +46,11 @@ export class RegisterComponent {
       tk: new FormControl ('', Validators.required)
     }),
     mobile: new FormControl ('', [Validators.required]),
-    email: new FormControl ('', [Validators.required, Validators.email])        
+    email: new FormControl ('', [Validators.required, Validators.email]),    
   }
   );
+
+  passwordNotMatch = false;
 
 onSubmit() {
   const data: User = {
@@ -62,10 +66,13 @@ onSubmit() {
         'tk': this.form.controls.address.controls.tk?.value || ''},
       'password': this.form.get('password')?.value || ''}
 
+    
+
+      
        this.http.post('http://localhost:3000/api/users', data).subscribe({
-      next: (response) => {
+        next: (response) => {
         
-        this.snackBar.open('Registration successfull', '', {
+        this.snackBar.open('Επιτυχής κατοχήρωση χρήστη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
@@ -74,14 +81,15 @@ onSubmit() {
       this.router.navigate(['app-login']);
     },
       error: (err) => {
-        this.snackBar.open('Registration failed', '', {
+        this.snackBar.open('Αποτυχία κατοχήρωσης χρήστη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
         
       });
       this.form.reset();}
-    });
+    }); 
+  
 };
 
 }

@@ -11,5 +11,7 @@ export interface User {
   },
   email: string,
   mobile: string,
-  password: string
+  password: string,
+  confirmPassword?: string
+
 }

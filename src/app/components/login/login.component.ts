@@ -51,7 +51,7 @@ onSubmit() {
 
     this.http.post<any>('http://localhost:3000/api/auth', data).subscribe({
       next: (response) => {
-        this.snackBar.open('Login successfully', '', {
+        this.snackBar.open('Επιτυχής σύνδεση', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
@@ -63,7 +63,7 @@ onSubmit() {
       },
       
       error: (err) => { 
-        this.snackBar.open('Login failed', '', {
+        this.snackBar.open('Αποτυχία σύνδεσης', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',

@@ -56,19 +56,19 @@ onSubmit() {
        this.playService.getPlayByCode(playData.code).subscribe({
       next: () => {
     
-      this.snackBar.open('A play with this code already exists', 'Close', {
+      this.snackBar.open('Ο κωδικός έργου πρέπει να είναι μοναδικός', 'Close', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
       });
     },
        error: (err) => {
-     
-      if (err.status === 404) {
-        //Δεν βρέθηκε
+        //Αν δεν βρέθηκε ο κωδικός//
+        if (err.status === 404) {
+      
         this.playService.createPlay(playData).subscribe({
           next: () => {
-            this.snackBar.open('Play submitted successfully', '', {
+            this.snackBar.open('Το έργο κατωχηρώθηκε επιτυχημένα', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -76,7 +76,7 @@ onSubmit() {
             this.form.reset();
           },
           error: () => {
-            this.snackBar.open('Play failed to submit', '', {
+            this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -84,7 +84,8 @@ onSubmit() {
           }
         });
       } else {
-        this.snackBar.open('An error occurred', '', {
+        //αν είναι άλλο το erros από 404//
+        this.snackBar.open('Λάθος. Δοκιμάστε ξανά', '', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',

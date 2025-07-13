@@ -66,14 +66,26 @@ onSubmit() {
   const playCode = this.form.get('playCode')?.value;
 
   if (!playCode) {
-    console.error('Play code is required');
-    return;
+    
+            this.snackBar.open('Ο κωδικός είναι υποχρεωτικός', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            
+      });
+
+      return
   }
 
   this.playService.getPlayByCode(playCode).subscribe({
     next: (response) => {
       if (!response.status) {
-        console.warn('Play not found');
+        this.snackBar.open('Το έργο δεν βρέθηκε', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            
+      });
         return;
       }
 
@@ -98,7 +110,7 @@ onSubmit() {
 
           this.showService.createShow(showData).subscribe({
            next: (res) => {
-            this.snackBar.open('Shows added successfully!', '', {
+            this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom'
@@ -106,7 +118,7 @@ onSubmit() {
       this.form.reset();
            },
            error: (err) => {
-            this.snackBar.open('Failed to add shows', '', {
+            this.snackBar.open('Αποτυχία προσθήκης παραστάσεων', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
@@ -116,7 +128,7 @@ onSubmit() {
         }
       }
     }, error: (err) => {
-            this.snackBar.open('Failed to find play', '', {
+            this.snackBar.open('Το έργο δεν βρέθηκε', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',

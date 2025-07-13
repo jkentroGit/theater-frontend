@@ -5,19 +5,18 @@
     </mat-card-title>
 
     <mat-card-content class="m-2">
-      <p *ngIf="isAdmin"><strong>Code:</strong> {{ play.code }}</p>
-      <p><strong>Director:</strong> {{ play.director }}</p>
+      <p *ngIf="isAdmin"><strong>Κωδικός έργου:</strong> {{ play.code }}</p>
+      <p><strong>Σκηνοθέτης:</strong> {{ play.director }}</p>
       <p
         matTooltip="{{ play.cast }}"
         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; cursor: pointer;"
       >
-        <strong>Cast:</strong> {{ play.cast }}
+        <strong>Συντελεστές:</strong> {{ play.cast }}
       </p>
-      <p><strong>Duration:</strong> {{ play.duration }} mins</p>
+      <p><strong>Διάρκεια:</strong> {{ play.duration }} mins</p>
     </mat-card-content>
 
 <mat-card-actions class="m-2">
-  <!-- Spacer pushes buttons to right -->
 
   <button
     mat-raised-button
@@ -25,7 +24,7 @@
     *ngIf="isAdmin"
     (click)="onEditPlay(play)"
   >
-    Edit Play
+    Επεξεργασία έργου
   </button>
 
   <button
@@ -34,7 +33,7 @@
     *ngIf="isAdmin"
     (click)="onDeletePlay(play)"
   >
-    Delete Play
+    Διαγραφή έργου
   </button>
 
   <button
@@ -42,6 +41,6 @@
     color="primary"
     (click)="onFindShow(play)"
   >
-    Find Show
+    Εμφάνιση παραστάσεων
   </button>
 </mat-card-actions>

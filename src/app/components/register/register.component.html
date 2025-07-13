@@ -54,19 +54,19 @@
         <mat-form-field>
             <mat-label>Κινητό</mat-label>
             <input matInput type="text" formControlName="mobile">
-            <mat-error>To kinht;o είναι υποχρεωτικό</mat-error>
+            <mat-error>To κινητό είναι υποχρεωτικό</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Password</mat-label>
+            <mat-label>Κωδικός</mat-label>
             <input matInput type="password" formControlName="password">
             <mat-error>Το password δεν είναι έγκυρο</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Confirm password</mat-label>
+            <mat-label>Επαλήθευση κωδικού</mat-label>
             <input matInput type="password" formControlName="confirmPassword">
-            <mat-error>Το password δεν είναι έγκυρο</mat-error>
+            <mat-error>Οι κωδικοί δεν ταιριάζουν</mat-error>
                                  
         </mat-form-field>
 
@@ -75,7 +75,7 @@
         color="primary"
         [disabled]="form.invalid"
         (click)="onSubmit()"
-        >Register
+        >Κατοχήρωση χρήστη
       </button>
       
     </form>
