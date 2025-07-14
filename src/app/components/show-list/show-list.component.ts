@@ -73,6 +73,11 @@ export class ShowListComponent {
     }
   }
 
+
+onEditShow(show: Show) {
+  this.router.navigate(['/show/edit', show._id]);
+  }
+
 loadPlayShows() {
   this.showService.getAllShows().subscribe({
     next: (res) => {

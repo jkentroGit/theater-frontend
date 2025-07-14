@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import {jwtDecode} from 'jwt-decode';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 interface DecodedToken {
   role: string;
@@ -20,13 +21,17 @@ interface DecodedToken {
 })
 export class SeatPlanComponent {
   seatingPlan: Row[] = [];
-  showId = '68663b26de22c99fc87a3b2d'; 
+  showId!: string;
   isAdmin: boolean = false;
 
-  constructor(private showService: ShowService, private snackBar: MatSnackBar) {}
+
+  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,) {}
 
   ngOnInit() {
-    this.loadSeatingPlan();
+    this.showId = this.route.snapshot.paramMap.get('id')!;
+    console.log(this.showId)
+    if (this.showId) {
+    this.loadSeatingPlan(this.showId); }
 
     const token = localStorage.getItem('token');
        if (token) {
@@ -40,8 +45,8 @@ export class SeatPlanComponent {
     }
   }
 
-  loadSeatingPlan() {
-    this.showService.getShowById(this.showId).subscribe({
+  loadSeatingPlan(showId: string) {
+    this.showService.getShowById(showId!).subscribe({
       next: (res) => {
         if (res.status) {
           this.seatingPlan = res.data.rows;

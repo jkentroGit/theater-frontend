@@ -17,6 +17,7 @@ export const routes: Routes = [
     { path: 'app-show', component:ShowComponent},
     { path: 'app-play-list', component:PlayListComponent},
     { path: 'play/edit/:code', component: PlayEditComponent},
-    { path: 'show/find/:code', component: ShowListComponent}
+    { path: 'show/find/:code', component: ShowListComponent},
+    { path: 'show/edit/:id', component: SeatPlanComponent}
 ];
 

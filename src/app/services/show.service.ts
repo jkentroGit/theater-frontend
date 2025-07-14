@@ -16,23 +16,20 @@ export class ShowService {
     return this.http.get<{ status: boolean; data: Show[] }>(this.baseUrl);
   }
 
-  getShowById(id: string): Observable<{ status: boolean; data: Show }> {
+  getShowById(id: String): Observable<{ status: boolean; data: Show }> {
     return this.http.get<{ status: boolean; data: Show }>(`${this.baseUrl}/${id}`);
   }
 
 
-  updateSeats(showId: string, seatsToUpdate: { label: string; status: string }[]): Observable<any> {
+  updateSeats(showId: String, seatsToUpdate: { label: string; status: string }[]): Observable<any> {
   const token = localStorage.getItem('token') || '';
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-  return this.http.put(
-    `${this.baseUrl}/${showId}`, 
-    { seatsToUpdate }, 
-    { headers }
+  return this.http.put(`${this.baseUrl}/${showId}`, { seatsToUpdate }, { headers }
   );
 }
 
-  deleteShow(showId: string): Observable<any> {
+  deleteShow(showId: String): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${showId}`);
   }
 
