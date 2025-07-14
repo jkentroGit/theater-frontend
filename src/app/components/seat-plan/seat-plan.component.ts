@@ -109,13 +109,12 @@ toggleAdmin(seat: Seat) {
   }
   }
 
-
 onClickHandler() {
   const seatsToUpdate = [];  
 
   for (const row of this.seatingPlan) {
     for (const seat of row.seats) {
-      if (seat.status === 'SELECTED') {
+      if (seat.status === 'SELECTED' || seat.status === 'BOOKED') {
         seat.status = 'BOOKED';
         const label = String(seat.seatNumber);
         seatsToUpdate.push({ label, status: 'BOOKED' });
@@ -125,24 +124,19 @@ onClickHandler() {
         const label = String(seat.seatNumber);
         seatsToUpdate.push({ label, status: 'AVAILABLE' });
       }
-       if (seat.status === 'BOOKED') {
-        seat.status = 'BOOKED';
-        const label = String(seat.seatNumber);
-        seatsToUpdate.push({ label, status: 'BOOKED' });
-      }
     }
   }
   
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
     next: (res) => {
-      this.snackBar.open('Seat(s) reserved successfully', '', {
+      this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
         
       });},
     error: (err) => {
-      this.snackBar.open('Seat(s) not reserved', '', {
+      this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',

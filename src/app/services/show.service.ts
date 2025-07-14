@@ -46,7 +46,7 @@ export class ShowService {
   const token = localStorage.getItem('token') || '';
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-  return this.http.delete(`${this.baseUrl}/by-play/${playId}`, { headers });
+  return this.http.delete(`${this.baseUrl}/by-play-id/${playId}`, { headers });
 }
 }
 
