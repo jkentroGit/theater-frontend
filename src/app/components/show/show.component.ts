@@ -17,6 +17,7 @@ import {
 } from '@angular/forms';
 import { Show } from '../../shared/interfaces/show';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show',
@@ -39,7 +40,7 @@ export class ShowComponent {
 
 
 private http = inject(HttpClient);
-constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar) {}
+constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar, private router: Router) {}
 
 
 days = [
@@ -109,24 +110,27 @@ onSubmit() {
           };       
 
           this.showService.createShow(showData).subscribe({
-           next: (res) => {
-            this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom'
-      });
-      this.form.reset();
+           next: (res) => {         
            },
            error: (err) => {
             this.snackBar.open('Αποτυχία προσθήκης παραστάσεων', '', {
             duration: 3000,
             horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            
-      });}
+            verticalPosition: 'bottom',            
+      });
+           
+    
+    }
           });
         }
-      }
+      } 
+            this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
+                  duration: 3000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'bottom'            
+            });
+            this.router.navigate(['/app-play-list']);
+            
     }, error: (err) => {
             this.snackBar.open('Το έργο δεν βρέθηκε', '', {
             duration: 3000,

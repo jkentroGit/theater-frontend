@@ -42,8 +42,13 @@ export class ShowListComponent {
   isAdmin: boolean = false;
   playId: String = '';
   playTitle: String = '';
+  playYear: String = '';
+  playDirector: String = '';
+  playCast: String = '';
+  playDuration: String = '';
 
 
+ 
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
     
@@ -51,12 +56,14 @@ export class ShowListComponent {
     if (code) {
       this.playService.getPlayByCode(code).subscribe({
         next: (res) => {
-          const playId = res.data._id || '';
-          const playTitle = res.data.title || '';
+          this.playId = res.data._id || '';
+          this.playTitle = res.data.title || '';
+          this.playYear = res.data.year || '';
+          this.playDirector = res.data.director || '';
+          this.playCast = res.data.cast || '';
+          this.playDuration = res.data.duration || '';
           
-          console.log(this.shows)
-          console.log(playTitle)
-
+          this.loadPlayShows();
 
         },
         error: () => {
@@ -66,11 +73,11 @@ export class ShowListComponent {
     }
   }
 
-  loadAllShows() {
+loadPlayShows() {
   this.showService.getAllShows().subscribe({
     next: (res) => {
-      this.shows = res.data;
-      console.log(this.shows)
+       this.shows = res.data.filter(show => show.playId === this.playId);
+
     },
     error: (err) => {
       console.error('Failed to load shows', err);

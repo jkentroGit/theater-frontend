@@ -1,1 +1,39 @@
-<p>{{ playTitle }}</p>
+
+
+<mat-card class="mb-2 p-4">
+
+  <mat-card-title class="m-4">
+      <strong>{{ playTitle }}</strong> ({{ playYear }})
+    </mat-card-title>
+
+    <mat-card-content class="m-2">
+      <p><strong>Σκηνοθέτης:</strong> {{ playDirector }}</p>
+      <p
+        matTooltip="{{ playCast }}"
+        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; cursor: pointer;"
+      >
+        <strong>Συντελεστές:</strong> {{ playCast }}
+      </p>
+      <p><strong>Διάρκεια:</strong> {{ playDuration }} mins</p>
+    </mat-card-content>
+</mat-card>
+
+  <mat-card class="green-card mb-2" *ngFor="let show of shows" >
+   
+    <mat-card-content class="m-2">
+      <div class="gap-16">
+        <div class="mb-2"><strong>Ημερομηνία</strong> {{ show.showDate | date: 'dd-MM-yyyy' }}</div>
+        <div><strong>Ώρα</strong> {{ show.time }}</div>
+      </div>
+    </mat-card-content>
+
+  <mat-card-actions >
+
+      <button class="m-2"
+        mat-raised-button
+        color="accent"
+      >
+        Επιλογή θέσης
+      </button>
+
+  </mat-card-actions>
