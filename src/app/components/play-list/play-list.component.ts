@@ -11,6 +11,7 @@ import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ShowService } from '../../services/show.service';
 
 @Component({
   selector: 'app-play-list',
@@ -31,6 +32,7 @@ export class PlayListComponent {
 
   constructor(private router: Router, private snackBar: MatSnackBar,) {}
   private playService = inject(PlayService);
+  private showService = inject(ShowService);
   plays: Play[] = [];
   isAdmin: boolean = false;
 
@@ -67,16 +69,25 @@ export class PlayListComponent {
   }
 
   onDeletePlay(play: Play) {
-    this.playService.deletePlay(play.code!).subscribe ({ 
+ 
+  this.playService.deletePlay(play.code!).subscribe({
     next: () => {
-    this.snackBar.open('Play deleted successfully', '', { duration: 3000 });
     
-    this.loadAllPlays();
+      this.showService.deleteShowsByPlayId(play._id!).subscribe({
+        next: (res) => {
+          this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000 });
 
-
+         
+          this.loadAllPlays();
+        },
+        error: () => {
+          this.snackBar.open('Το έργο διαγράφηκε, αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000 });
+          this.loadAllPlays();
+        }
+      });
     },
-    error: (err) => {
-      this.snackBar.open('Failed to delete play', '', { duration: 3000 });
+    error: () => {
+      this.snackBar.open('Αποτυχία διαγραφής έργου', '', { duration: 3000 });
     }
   });
 }
