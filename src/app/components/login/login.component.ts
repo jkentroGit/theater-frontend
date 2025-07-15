@@ -57,7 +57,6 @@ onSubmit() {
         verticalPosition: 'bottom',
 
       });
-      this.form.reset();
       localStorage.setItem('token', response.data);
       this.router.navigate(['/app-play-list']);  
       },

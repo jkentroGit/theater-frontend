@@ -12,6 +12,7 @@ import { Play } from '../../shared/interfaces/play';
 import { HttpClient } from '@angular/common/http';
 import { PlayService } from '../../services/play.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -30,7 +31,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class PlayComponent {
 
     private http = inject(HttpClient);
-    constructor(private playService: PlayService, private snackBar: MatSnackBar) {}
+    constructor(private playService: PlayService, private snackBar: MatSnackBar, private router: Router) {}
 
    form =new FormGroup ({
     code: new FormControl ('', [Validators.required]),
@@ -45,7 +46,7 @@ export class PlayComponent {
 onSubmit() {
 
   const playData: Play = {
-      'code': this.form.get('code')?.value || '',
+      'code': (this.form.get('code')?.value || '').toUpperCase(),
       'title': this.form.get('title')?.value || '',
       'year': this.form.get('year')?.value || '',
       'director':this.form.get('director')?.value || '',
@@ -73,7 +74,7 @@ onSubmit() {
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
             });
-            this.form.reset();
+            this.router.navigate(['/app-play-list']);  
           },
           error: () => {
             this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', {
@@ -84,7 +85,7 @@ onSubmit() {
           }
         });
       } else {
-        //αν είναι άλλο το erros από 404//
+        //αν είναι άλλο το error από 404//
         this.snackBar.open('Λάθος. Δοκιμάστε ξανά', '', {
           duration: 3000,
           horizontalPosition: 'right',

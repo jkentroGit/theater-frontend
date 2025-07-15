@@ -109,13 +109,12 @@ toggleAdmin(seat: Seat) {
   }
   }
 
-
 onClickHandler() {
   const seatsToUpdate = [];  
 
   for (const row of this.seatingPlan) {
     for (const seat of row.seats) {
-      if (seat.status === 'SELECTED') {
+      if (seat.status === 'SELECTED' || seat.status === 'BOOKED') {
         seat.status = 'BOOKED';
         const label = String(seat.seatNumber);
         seatsToUpdate.push({ label, status: 'BOOKED' });
@@ -124,11 +123,6 @@ onClickHandler() {
         seat.status = 'AVAILABLE';
         const label = String(seat.seatNumber);
         seatsToUpdate.push({ label, status: 'AVAILABLE' });
-      }
-       if (seat.status === 'BOOKED') {
-        seat.status = 'BOOKED';
-        const label = String(seat.seatNumber);
-        seatsToUpdate.push({ label, status: 'BOOKED' });
       }
     }
   }
