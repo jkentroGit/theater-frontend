@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Play } from '../../shared/interfaces/play';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode} from 'jwt-decode';
 import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -58,7 +58,7 @@ export class PlayListComponent {
             console.error('Token decode failed', err);
             this.isAdmin = false;
           }
-        }
+        };
 
  this.loadAllPlays();
 

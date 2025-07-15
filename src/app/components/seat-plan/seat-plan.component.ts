@@ -129,14 +129,14 @@ onClickHandler() {
   
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
     next: (res) => {
-      this.snackBar.open('Seat(s) reserved successfully', '', {
+      this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
         
       });},
     error: (err) => {
-      this.snackBar.open('Seat(s) not reserved', '', {
+      this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
