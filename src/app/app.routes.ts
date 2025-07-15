@@ -10,6 +10,7 @@ import { ShowListComponent } from './components/show-list/show-list.component';
 
 
 export const routes: Routes = [
+    { path: '', redirectTo: 'app-play-list', pathMatch: 'full' },
     { path:'app-login', component:LoginComponent },
     { path:'app-register', component:RegisterComponent },
     { path: 'app-seat-plan', component:SeatPlanComponent},

@@ -30,6 +30,7 @@ import { ShowService } from '../../services/show.service';
 })
 export class PlayListComponent {
 
+  
   constructor(private router: Router, private snackBar: MatSnackBar,) {}
   private playService = inject(PlayService);
   private showService = inject(ShowService);

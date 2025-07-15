@@ -30,11 +30,39 @@
   <mat-card-actions >
 
       <button class="m-2"
+        *ngIf="token && !isAdmin"
         mat-raised-button
         color="accent"
         (click)="onEditShow(show)"
       >
         Επιλογή θέσης
+      </button>
+
+      <button class="m-2"
+        *ngIf="!token"
+        mat-raised-button
+        color="accent"
+        (click)="login()"
+      >
+        Κάνετε σύνδεση για κράτηση
+      </button>
+
+      <button class="m-2"
+        *ngIf="isAdmin"
+        mat-raised-button
+        color="accent"
+        (click)="onEditShow(show)"
+      >
+        Επεξεργασία πλάνου
+      </button>
+
+      <button class="m-2"
+        *ngIf="isAdmin"
+        mat-raised-button
+        color="accent"
+        (click)="onDeleteShow(show._id!)"
+      >
+        Διαγραφή παράστασης
       </button>
 
   </mat-card-actions>

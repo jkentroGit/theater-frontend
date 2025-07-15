@@ -17,7 +17,7 @@ import { PlayService } from '../../services/play.service';
 @Component({
   selector: 'app-show-list',
   imports: [
-     CommonModule,
+    CommonModule,
     MatCardModule,
     MatListModule,
     MatProgressSpinnerModule,
@@ -30,6 +30,10 @@ import { PlayService } from '../../services/play.service';
 })
 export class ShowListComponent {
 
+
+  token: string | any;
+  isAdmin: boolean = false;
+
   constructor(
   private router: Router,
   private route: ActivatedRoute,
@@ -39,7 +43,7 @@ export class ShowListComponent {
 ) {}
 
   shows: Show[] = [];
-  isAdmin: boolean = false;
+  
   playId: String = '';
   playTitle: String = '';
   playYear: String = '';
@@ -51,6 +55,19 @@ export class ShowListComponent {
  
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
+
+   
+
+    this.token = localStorage.getItem('token');
+           if (this.token) {
+            try {
+            const decoded = jwtDecode<DecodedToken>(this.token);
+            this.isAdmin = decoded.role === 'ADMIN';
+          } catch (err) {
+            console.error('Token decode failed', err);
+            this.isAdmin = false;
+          }
+        };
     
 
     if (code) {
@@ -78,6 +95,19 @@ onEditShow(show: Show) {
   this.router.navigate(['/show/edit', show._id]);
   }
 
+onDeleteShow(showId: string) {
+
+   this.showService.deleteShow(showId).subscribe({
+    next: (res) => {
+      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000 });        
+
+    },
+    error: (err) => {
+      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000 });   
+    }
+  });
+  }
+
 loadPlayShows() {
   this.showService.getAllShows().subscribe({
     next: (res) => {
@@ -89,6 +119,11 @@ loadPlayShows() {
     }
   });
 }
+
+login () {
+  this.router.navigate(['app-login']);
+}
+
 }
 
 

@@ -30,7 +30,11 @@ export class ShowService {
 }
 
   deleteShow(showId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${showId}`);
+
+  const token = localStorage.getItem('token') || '';
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete(`${this.baseUrl}/${showId}`, { headers });
   }
 
 

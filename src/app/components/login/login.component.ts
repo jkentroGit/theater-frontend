@@ -58,7 +58,7 @@ onSubmit() {
 
       });
       localStorage.setItem('token', response.data);
-      this.router.navigate(['/app-play-list']);  
+      this.router.navigate(['app-play-list']);  
       },
       
       error: (err) => { 

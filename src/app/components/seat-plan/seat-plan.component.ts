@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShowService } from '../../services/show.service';
 import { Row, Seat } from '../../shared/interfaces/row-seat';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode} from 'jwt-decode';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-
-interface DecodedToken {
-  role: string;
-}
+import { DecodedToken } from '../../shared/interfaces/decoded-token';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-seat-plan',
@@ -25,7 +23,7 @@ export class SeatPlanComponent {
   isAdmin: boolean = false;
 
 
-  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,) {}
+  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location) {}
 
   ngOnInit() {
     this.showId = this.route.snapshot.paramMap.get('id')!;
@@ -129,12 +127,27 @@ onClickHandler() {
   
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
     next: (res) => {
+
+      if(!this.isAdmin) {
       this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-        
-      });},
+        verticalPosition: 'bottom',        
+      })};
+
+      if(this.isAdmin) {
+      this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',        
+      })
+    this.location.back();
+    };
+
+
+
+
+    },
     error: (err) => {
       this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
         duration: 3000,
