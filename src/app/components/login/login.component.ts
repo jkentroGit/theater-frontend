@@ -12,6 +12,7 @@ import { Credentials } from '../../shared/interfaces/credentials';
 import { HttpClient } from '@angular/common/http'; 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   private http = inject(HttpClient);
-  constructor(private snackBar: MatSnackBar, private router: Router) {}
+  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService) {}
 
   form = new FormGroup ({
     username: new FormControl ('', Validators.required),
@@ -57,7 +58,11 @@ onSubmit() {
         verticalPosition: 'bottom',
 
       });
-      localStorage.setItem('token', response.data);
+
+      console.log(response.data)
+
+      this.authService.login(response.data);
+      // // localStorage.setItem('token', response.data);
       this.router.navigate(['app-play-list']);  
       },
       

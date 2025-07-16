@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { User } from '../shared/interfaces/user';
 
 @Injectable({ providedIn: 'root' })
+
 export class AuthService {
   currentUser = signal<User | null>(this.getUserFromToken());
 
@@ -23,6 +24,20 @@ export class AuthService {
 
   private decodeUserFromToken(token: string): User {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return { username: payload.username, role: payload.role };
+    return {
+  username: payload.username, 
+  role: payload.role,
+  firstname: '',
+  lastname: '',
+  address: {
+    street: '',
+    streetNum: '',
+    city: '',
+    tk: ''
+  },
+  email: '',
+  mobile: '',
+  password: ''
+};
   }
 }
