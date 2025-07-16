@@ -64,7 +64,7 @@ days = [
   );
 
 onSubmit() {
-  const playCode = this.form.get('playCode')?.value;
+  const playCode = (this.form.get('playCode')?.value ?? '').toUpperCase();
 
   if (!playCode) {
     

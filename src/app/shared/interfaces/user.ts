@@ -13,5 +13,5 @@ export interface User {
   mobile: string,
   password: string,
   confirmPassword?: string
-
+  role?: string
 }

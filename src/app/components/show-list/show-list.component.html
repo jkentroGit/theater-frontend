@@ -18,6 +18,7 @@
     </mat-card-content>
 </mat-card>
 
+
   <mat-card class="green-card mb-2" *ngFor="let show of shows" >
    
     <mat-card-content class="m-2">
@@ -60,7 +61,7 @@
         *ngIf="isAdmin"
         mat-raised-button
         color="accent"
-        (click)="onDeleteShow(show._id!)"
+        (click)="onDeleteShow(show)"
       >
         Διαγραφή παράστασης
       </button>

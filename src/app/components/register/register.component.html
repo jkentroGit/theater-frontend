@@ -57,10 +57,20 @@
             <mat-error>To κινητό είναι υποχρεωτικό</mat-error>
         </mat-form-field>
 
+        <mat-form-field *ngIf="isAdmin" appearance="fill">
+        <mat-label>Ρόλος</mat-label>
+        <mat-select formControlName="role">
+            <mat-option [value]="'ADMIN'">ADMIN</mat-option>
+            <mat-option [value]="'USER'">USER</mat-option>
+        </mat-select>
+        </mat-form-field>
+
+        
+
         <mat-form-field>
             <mat-label>Κωδικός</mat-label>
             <input matInput type="password" formControlName="password">
-            <mat-error>Το password δεν είναι έγκυρο</mat-error>
+            
         </mat-form-field>
 
         <mat-form-field>

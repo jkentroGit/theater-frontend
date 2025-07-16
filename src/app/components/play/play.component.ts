@@ -74,7 +74,7 @@ onSubmit() {
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
             });
-            this.router.navigate(['/app-play-list']);  
+            this.router.navigate(['app-play-list']);  
           },
           error: () => {
             this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', {

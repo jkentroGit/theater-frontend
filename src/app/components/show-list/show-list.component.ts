@@ -95,11 +95,17 @@ onEditShow(show: Show) {
   this.router.navigate(['/show/edit', show._id]);
   }
 
-onDeleteShow(showId: string) {
+onDeleteShow(show: Show) {
 
-   this.showService.deleteShow(showId).subscribe({
+    if (!show._id) {
+    this.snackBar.open('Η παράσταση δεν έχει έγκυρο ID', '', { duration: 3000 });
+    return;
+  }
+
+   this.showService.deleteShow(show._id).subscribe({
     next: (res) => {
-      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000 });        
+      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000 });
+      this.loadPlayShows();
 
     },
     error: (err) => {

@@ -77,7 +77,6 @@ export class PlayListComponent {
       this.showService.deleteShowsByPlayId(play._id!).subscribe({
         next: (res) => {
           this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000 });
-
          
           this.loadAllPlays();
         },
