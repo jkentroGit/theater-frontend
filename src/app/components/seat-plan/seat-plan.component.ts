@@ -76,6 +76,7 @@ getSeatColour(status: string): string {
   switch (status) {
     case 'AVAILABLE':
       return 'text-success mat-icon-large';
+
     case 'SELECTED':
       return 'text-primary mat-icon-large';
     case 'BOOKED':
