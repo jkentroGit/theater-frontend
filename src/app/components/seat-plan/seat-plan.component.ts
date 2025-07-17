@@ -8,6 +8,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService} from '../../services/auth.service';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-seat-plan',
@@ -19,8 +21,9 @@ import { AuthService} from '../../services/auth.service';
 export class SeatPlanComponent {
   seatingPlan: Row[] = [];
   showId!: string;
+  purchaseConfirmed = false;
 
-  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location, public authService: AuthService) {}
+  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location, public authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.showId = this.route.snapshot.paramMap.get('id')!;
@@ -29,6 +32,20 @@ export class SeatPlanComponent {
     this.loadSeatingPlan(this.showId); }
 
    }
+
+  openDialog() {
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      // panelClass: 'bootstrap-dialog' // Optional, for custom styling
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.onClickHandler();
+
+      } else {
+        this.location.back();
+      }
+    });
+  }
 
   loadSeatingPlan(showId: string) {
     this.showService.getShowById(showId!).subscribe({
@@ -98,6 +115,8 @@ toggleAdmin(seat: Seat) {
     this.location.back();
   }
 onClickHandler() {
+
+
   const seatsToUpdate = [];
 
   for (const row of this.seatingPlan) {
@@ -115,36 +134,39 @@ onClickHandler() {
     }
   }
 
-  this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
-    next: (res) => {
+   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
+     next: (res) => {
 
-      if(!this.authService.isAdmin()) {
-      this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-      })};
+       if (!this.authService.isAdmin()) {
+         this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
+           duration: 3000,
+           horizontalPosition: 'right',
+           verticalPosition: 'bottom',
+         })
+       }
+       ;
 
-      if(this.authService.isAdmin()) {
-      this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-      })
-    this.location.back();
-    };
+       if (this.authService.isAdmin()) {
+         this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
+           duration: 3000,
+           horizontalPosition: 'right',
+           verticalPosition: 'bottom',
+         })
+         this.location.back();
+       }
+       ;
 
 
+     },
+     error: (err) => {
+       this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
+         duration: 3000,
+         horizontalPosition: 'right',
+         verticalPosition: 'bottom',
 
-
-    },
-    error: (err) => {
-      this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-
-      });}
-  });
+       });
+     }
+   });
+  this.location.back();
 }
 }

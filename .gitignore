@@ -3,3 +3,5 @@
 /.angular
 .env
 /temp
+.idea/
+*.iml
