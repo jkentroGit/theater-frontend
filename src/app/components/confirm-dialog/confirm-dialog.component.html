@@ -1,0 +1,16 @@
+
+<div class="p-4">
+<div class="modal-header mb-2">
+  <h5 class="modal-title d-flex justify-content-center">Επιβεβαίωση πληρωμής</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body mb-4">
+  Οι θέσεις κρατήθηκαν. Θέλετε να χρεωθεί η κάρτα σας;
+</div>
+
+<div class=" modal-footer d-flex justify-content-center gap-2">
+  <button class="btn btn-sm btn-danger mx-2" (click)="cancel()">Ακύρωση κράτησης</button>
+  <button class="btn  btn-sm btn-success" (click)="confirm()">Κράτηση και πληρωμή</button>
+</div>
+</div>
