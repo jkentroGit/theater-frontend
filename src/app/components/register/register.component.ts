@@ -16,8 +16,6 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { jwtDecode } from 'jwt-decode';
-import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

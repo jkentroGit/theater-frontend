@@ -1,7 +1,5 @@
-import { Component, linkedSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { jwtDecode} from 'jwt-decode';
-import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { CommonModule } from '@angular/common';
 import {AuthService} from '../../services/auth.service';
 

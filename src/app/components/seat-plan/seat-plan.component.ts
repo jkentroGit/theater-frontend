@@ -4,10 +4,8 @@ import { Row, Seat } from '../../shared/interfaces/row-seat';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { jwtDecode} from 'jwt-decode';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { Location } from '@angular/common';
 import { AuthService} from '../../services/auth.service';
 

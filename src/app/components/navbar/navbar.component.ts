@@ -13,7 +13,6 @@ export class NavbarComponent {
 
   constructor(private router: Router, public authService: AuthService) {}
 
-  isAdmin: boolean = false;
   username: string = '';
 
 
