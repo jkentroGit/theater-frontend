@@ -62,9 +62,9 @@ export class SeatPlanComponent {
 getSeatIcon(status: string): string {
   switch (status) {
     case 'AVAILABLE':
-      return 'crop_square'; 
+      return 'crop_square';
     case 'SELECTED':
-      return 'check_box';  
+      return 'check_box';
     case 'BOOKED':
       return 'disabled_by_default';
     default:
@@ -106,9 +106,11 @@ toggleAdmin(seat: Seat) {
     seat.status = 'AVAILABLE';
   }
   }
-
+  onClickBack () {
+    this.location.back();
+  }
 onClickHandler() {
-  const seatsToUpdate = [];  
+  const seatsToUpdate = [];
 
   for (const row of this.seatingPlan) {
     for (const seat of row.seats) {
@@ -124,7 +126,7 @@ onClickHandler() {
       }
     }
   }
-  
+
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
     next: (res) => {
 
@@ -132,14 +134,14 @@ onClickHandler() {
       this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
-        verticalPosition: 'bottom',        
+        verticalPosition: 'bottom',
       })};
 
       if(this.isAdmin) {
       this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
         duration: 3000,
         horizontalPosition: 'right',
-        verticalPosition: 'bottom',        
+        verticalPosition: 'bottom',
       })
     this.location.back();
     };
@@ -153,7 +155,7 @@ onClickHandler() {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-       
+
       });}
   });
 }

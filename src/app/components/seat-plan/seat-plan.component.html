@@ -1,7 +1,7 @@
 <div class="flex text-center">
   <div *ngFor="let row of seatingPlan">
     <div>
-      <span >Row {{ row.rowNumber }}</span>      
+
       <ng-container *ngFor="let seat of row.seats">
         <button
           mat-icon-button
@@ -12,8 +12,12 @@
       </ng-container>
     </div>
   </div>
-<button class="mt-4" mat-raised-button color="primary" (click)="onClickHandler()">
+<button class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickHandler()">
   Κράτηση θέσεων
 </button>
+
+  <button class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickBack()">
+    Επιλογή άλλης παράστασης
+  </button>
 
 </div>

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
-  
+
   <div class="d-flex justify-content-end align-items-center">
     <span class="m-2 material-symbols-outlined text-white">confirmation_number</span>
     <a class="navbar-brand cursor-pointer px-4" role="button" routerLink="app-play">
@@ -10,7 +10,7 @@
   <div class="px-4 d-flex align-items-center gap-2">
     <div *ngIf="authService.currentUser() as user">
     <span class="text-white small me-2">Logged in as:</span>
-    <a class="navbar-brand cursor-pointer mb-0" role="button" routerLink="">
+    <a class="cursor-pointer mb-0 text-white small me-2 text-decoration-none" role="button" routerLink="">
       {{user.username}}
     </a>
     <button class="btn btn-sm btn-outline-light ms-2" (click)="logout()">Logout</button>
