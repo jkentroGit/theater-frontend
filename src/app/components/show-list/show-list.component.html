@@ -45,10 +45,10 @@
   <mat-card-actions >
 
       <button class="m-2"
-        *ngIf="token && !isAdmin"
+        *ngIf="token && !this.authService.isAdmin()"
         mat-raised-button
         color="accent"
-              [disabled]="show.cardColour === 'red-card'"
+        [disabled]="show.cardColour === 'red-card'"
         (click)="onEditShow(show)"
       >
         Επιλογή θέσης
@@ -64,7 +64,7 @@
       </button>
 
       <button class="m-2"
-        *ngIf="isAdmin"
+        *ngIf="authService.isAdmin()"
         mat-raised-button
         color="accent"
         (click)="onEditShow(show)"
@@ -73,7 +73,7 @@
       </button>
 
       <button class="m-2"
-        *ngIf="isAdmin"
+        *ngIf="authService.isAdmin()"
         mat-raised-button
         color="accent"
         (click)="onDeleteShow(show)"

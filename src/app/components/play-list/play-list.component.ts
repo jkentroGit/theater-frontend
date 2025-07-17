@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowService } from '../../services/show.service';
+import { AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-play-list',
@@ -30,12 +31,11 @@ import { ShowService } from '../../services/show.service';
 })
 export class PlayListComponent {
 
-  
-  constructor(private router: Router, private snackBar: MatSnackBar,) {}
+
+  constructor(private router: Router, private snackBar: MatSnackBar, public authService: AuthService) {}
   private playService = inject(PlayService);
   private showService = inject(ShowService);
   plays: Play[] = [];
-  isAdmin: boolean = false;
 
   loadAllPlays() {
   this.playService.getAllPlays().subscribe({
@@ -50,17 +50,6 @@ export class PlayListComponent {
 
   ngOnInit(): void {
 
-    const token = localStorage.getItem('token');
-           if (token) {
-            try {
-            const decoded = jwtDecode<DecodedToken>(token);
-            this.isAdmin = decoded.role === 'ADMIN';
-          } catch (err) {
-            console.error('Token decode failed', err);
-            this.isAdmin = false;
-          }
-        };
-
  this.loadAllPlays();
 
   }
@@ -70,14 +59,14 @@ export class PlayListComponent {
   }
 
   onDeletePlay(play: Play) {
- 
+
   this.playService.deletePlay(play.code!).subscribe({
     next: () => {
-    
+
       this.showService.deleteShowsByPlayId(play._id!).subscribe({
         next: (res) => {
           this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000 });
-         
+
           this.loadAllPlays();
         },
         error: () => {
@@ -94,6 +83,6 @@ export class PlayListComponent {
 
   onFindShow(play: Play) {{
   this.router.navigate(['/show/find', play.code]);
-  } 
+  }
 }
 }

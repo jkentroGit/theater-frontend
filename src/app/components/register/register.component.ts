@@ -4,12 +4,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { 
+import {
   AbstractControl,
-  FormControl, 
-  FormGroup, 
-  ReactiveFormsModule, 
-  Validators 
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { User } from '../../shared/interfaces/user';
 import { HttpClient } from '@angular/common/http';
@@ -18,14 +18,15 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { DecodedToken } from '../../shared/interfaces/decoded-token';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
-  standalone: true,  
+  standalone: true,
   imports: [
-    MatButtonModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     MatSnackBarModule,
     CommonModule,
@@ -38,25 +39,7 @@ import { DecodedToken } from '../../shared/interfaces/decoded-token';
 export class RegisterComponent {
 
     private http = inject(HttpClient);
-    constructor(private snackBar: MatSnackBar, private router: Router) {}
-    isAdmin: boolean = false;
-
-
-    ngOnInit(): void {
-    
-        const token = localStorage.getItem('token');
-               if (token) {
-                try {
-                const decoded = jwtDecode<DecodedToken>(token);
-                this.isAdmin = decoded.role === 'ADMIN';
-              } catch (err) {
-                console.error('Token decode failed', err);
-                this.isAdmin = false;
-              }
-            };
-    
-    
-      }
+    constructor(private snackBar: MatSnackBar, private router: Router, public authService: AuthService) {}
 
    form =new FormGroup ({
     username: new FormControl ('', [Validators.required]),
@@ -79,7 +62,7 @@ export class RegisterComponent {
   );
   passwordConfirmValidator(control: AbstractControl): {[key:string]: boolean} | null {
     const form = control as FormGroup;
-    
+
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value
 
@@ -87,7 +70,7 @@ export class RegisterComponent {
       form.get('confirmPassword')?.setErrors({passwordMismatch: true})
       return {passwordMismatch: true}
     }
-    
+
     return null
   }
 
@@ -106,15 +89,15 @@ onSubmit() {
       'role' : this.form.get('role')?.value || 'USER',
       'password': this.form.get('password')?.value || ''}
 
-      
+
        this.http.post('http://localhost:3000/api/users', data).subscribe({
         next: (response) => {
-        
+
         this.snackBar.open('Επιτυχής κατοχήρωση χρήστη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-       
+
       });
       this.router.navigate(['app-login']);
     },
@@ -123,11 +106,11 @@ onSubmit() {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-        
+
       });
       this.form.reset();}
-    }); 
-  
+    });
+
 };
 
 }

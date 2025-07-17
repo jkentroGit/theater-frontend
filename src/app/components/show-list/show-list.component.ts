@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -12,8 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Show } from '../../shared/interfaces/show';
 import { ShowService } from '../../services/show.service';
 import { PlayService } from '../../services/play.service';
-import { Row } from '../../shared/interfaces/row-seat';
-import { Seat} from '../../shared/interfaces/row-seat';
+import { AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -32,16 +31,15 @@ import { Seat} from '../../shared/interfaces/row-seat';
 })
 export class ShowListComponent {
 
-
   token: string | any;
-  isAdmin: boolean = false;
 
   constructor(
   private router: Router,
   private route: ActivatedRoute,
   private snackBar: MatSnackBar,
   private showService: ShowService,
-  private playService: PlayService
+  private playService: PlayService,
+  public authService: AuthService
 ) {}
 
   shows: Show[] = [];
@@ -58,18 +56,7 @@ export class ShowListComponent {
 
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
-
     this.token = localStorage.getItem('token');
-           if (this.token) {
-            try {
-            const decoded = jwtDecode<DecodedToken>(this.token);
-            this.isAdmin = decoded.role === 'ADMIN';
-          } catch (err) {
-            console.error('Token decode failed', err);
-            this.isAdmin = false;
-          }
-        };
-
 
     if (code) {
       this.playService.getPlayByCode(code).subscribe({

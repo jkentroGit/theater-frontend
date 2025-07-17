@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DecodedToken } from '../../shared/interfaces/decoded-token';
 import { Location } from '@angular/common';
+import { AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-seat-plan',
@@ -20,28 +21,16 @@ import { Location } from '@angular/common';
 export class SeatPlanComponent {
   seatingPlan: Row[] = [];
   showId!: string;
-  isAdmin: boolean = false;
 
-
-  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location) {}
+  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location, public authService: AuthService) {}
 
   ngOnInit() {
     this.showId = this.route.snapshot.paramMap.get('id')!;
-    console.log(this.showId)
+
     if (this.showId) {
     this.loadSeatingPlan(this.showId); }
 
-    const token = localStorage.getItem('token');
-       if (token) {
-        try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        this.isAdmin = decoded.role === 'ADMIN';
-      } catch (err) {
-        console.error('Token decode failed', err);
-        this.isAdmin = false;
-      }
-    }
-  }
+   }
 
   loadSeatingPlan(showId: string) {
     this.showService.getShowById(showId!).subscribe({
@@ -87,7 +76,7 @@ getSeatColour(status: string): string {
 }
 
 handleSeatStatus(seat: any) {
-  if (this.isAdmin) {
+  if (this.authService.isAdmin()) {
     this.toggleAdmin(seat);
   } else {
     this.toggleSeatStatus(seat);
@@ -131,14 +120,14 @@ onClickHandler() {
   this.showService.updateSeats(this.showId, seatsToUpdate).subscribe({
     next: (res) => {
 
-      if(!this.isAdmin) {
+      if(!this.authService.isAdmin()) {
       this.snackBar.open('Η κράτηση είναι έγκυρη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
       })};
 
-      if(this.isAdmin) {
+      if(this.authService.isAdmin()) {
       this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
         duration: 3000,
         horizontalPosition: 'right',

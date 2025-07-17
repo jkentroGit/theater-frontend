@@ -2,11 +2,11 @@ import { Component, inject} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { 
-  FormControl, 
-  FormGroup, 
-  ReactiveFormsModule, 
-  Validators 
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { Play } from '../../shared/interfaces/play';
 import { HttpClient } from '@angular/common/http';
@@ -18,13 +18,13 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-play-edit',
-  standalone: true,  
+  standalone: true,
   imports: [
-    MatButtonModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   templateUrl: './play-edit.component.html',
   styleUrl: './play-edit.component.css'
@@ -32,7 +32,7 @@ import { Router } from '@angular/router';
 export class PlayEditComponent {
 
     private http = inject(HttpClient);
-    constructor(private playService: PlayService, private snackBar: MatSnackBar, 
+    constructor(private playService: PlayService, private snackBar: MatSnackBar,
     private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
@@ -57,7 +57,7 @@ export class PlayEditComponent {
     year: new FormControl ('', [Validators.required]),
     director: new FormControl ('', Validators.required),
     cast: new FormControl ('', Validators.required),
-    duration: new FormControl ('', [Validators.required])        
+    duration: new FormControl ('', [Validators.required])
   }
   );
 

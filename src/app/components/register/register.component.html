@@ -43,7 +43,7 @@
                 <input matInput type="text" formControlName="tk">
                 <mat-error>Ο ΤΚ είναι υποχεωτικός</mat-error>
             </mat-form-field>
-            </div>       
+            </div>
        </div>
        <mat-form-field>
             <mat-label>Email</mat-label>
@@ -57,7 +57,9 @@
             <mat-error>To κινητό είναι υποχρεωτικό</mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="isAdmin" appearance="fill">
+        <mat-form-field
+          *ngIf="authService.isAdmin()"
+          appearance="fill">
         <mat-label>Ρόλος</mat-label>
         <mat-select formControlName="role">
             <mat-option [value]="'ADMIN'">ADMIN</mat-option>
@@ -65,19 +67,19 @@
         </mat-select>
         </mat-form-field>
 
-        
+
 
         <mat-form-field>
             <mat-label>Κωδικός</mat-label>
             <input matInput type="password" formControlName="password">
-            
+
         </mat-form-field>
 
         <mat-form-field>
         <mat-label>Επαλήθευση κωδικού</mat-label>
         <input type="password" matInput formControlName="confirmPassword"/>
         <mat-error *ngIf="form.get('confirmPassword')?.hasError('passwordMismatch')">Οι κωδικοί δεν ταιριάζουν</mat-error>
-  
+
       </mat-form-field>
 
         <button
@@ -87,7 +89,7 @@
         (click)="onSubmit()"
         >Κατοχήρωση χρήστη
       </button>
-      
+
     </form>
 
 </div>

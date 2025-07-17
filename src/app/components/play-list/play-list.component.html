@@ -4,7 +4,7 @@
     </mat-card-title>
 
     <mat-card-content class="m-2">
-      <p *ngIf="isAdmin"><strong>Κωδικός έργου:</strong> {{ play.code }}</p>
+      <p *ngIf="authService.isAdmin()"><strong>Κωδικός έργου:</strong> {{ play.code }}</p>
       <p><strong>Σκηνοθέτης:</strong> {{ play.director }}</p>
       <p
         matTooltip="{{ play.cast }}"
@@ -20,7 +20,7 @@
   <button class="mx-2"
     mat-raised-button
     color="accent"
-    *ngIf="isAdmin"
+    *ngIf="authService.isAdmin()"
     (click)="onEditPlay(play)"
   >
     Επεξεργασία έργου
@@ -29,7 +29,7 @@
   <button class="mx-2"
     mat-raised-button
     color="warn"
-    *ngIf="isAdmin"
+    *ngIf="authService.isAdmin()"
     (click)="onDeletePlay(play)"
   >
     Διαγραφή έργου

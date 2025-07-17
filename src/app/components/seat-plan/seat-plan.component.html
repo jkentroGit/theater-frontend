@@ -12,9 +12,16 @@
       </ng-container>
     </div>
   </div>
-<button class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickHandler()">
+<button
+  *ngIf="!authService.isAdmin()"
+  class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickHandler()">
    Κράτηση θέσεων
 </button>
+  <button
+    *ngIf="authService.isAdmin()"
+    class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickHandler()">
+    Επεξεργασία πλάνου
+  </button>
 
   <button class="mt-4 mx-2" mat-raised-button color="primary" (click)="onClickBack()">
     Επιλογή άλλης παράστασης

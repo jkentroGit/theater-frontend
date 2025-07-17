@@ -1,10 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import { User } from '../shared/interfaces/user';
 
 @Injectable({ providedIn: 'root' })
 
 export class AuthService {
   currentUser = signal<User | null>(this.getUserFromToken());
+  isAdmin = computed(() => this.currentUser()?.role === 'ADMIN'); //αλλαγή isAdmin me computed
 
   login(token: string) {
     localStorage.setItem('token', token);
@@ -25,7 +26,7 @@ export class AuthService {
   private decodeUserFromToken(token: string): User {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return {
-  username: payload.username, 
+  username: payload.username,
   role: payload.role,
   firstname: '',
   lastname: '',
