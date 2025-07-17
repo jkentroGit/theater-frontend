@@ -1,17 +1,17 @@
-<div class="d-flex flex-column mt-2 w-50">
+<div class="d-flex flex-column mt-2 w-100">
 
     <form [formGroup]="form" class="d-flex flex-column">
         <mat-form-field>
             <mat-label>Username</mat-label>
             <input matInput type="text" formControlName="username">
             <mat-error>To username είναι υποχρεωτικό</mat-error>
-        </mat-form-field>   
+        </mat-form-field>
 
         <mat-form-field>
             <mat-label>Password</mat-label>
             <input matInput type="password" formControlName="password">
             <mat-error>Το password δεν είναι έγκυρο</mat-error>
-        </mat-form-field>    
+        </mat-form-field>
 
         <button
         mat-flat-button
@@ -23,7 +23,7 @@
         <a (click)="register()" class="mt-2  text-center underline text-blue-100 hover:text-blue-900">
          Δεν έχετε λογαριασμό?
         </a>
-   
+
     </form>
 
 </div>

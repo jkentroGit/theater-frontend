@@ -16,7 +16,7 @@
       </p>
       <p><strong>Διάρκεια:</strong> {{ playDuration }} mins</p>
     </mat-card-content>
-    <mat-card-footer class="px-4 pt-4 d-flex align-items-center justify-content-end">
+    <mat-card-footer class= "d-flex align-items-center justify-content-end justify-content-sm-center px-4 pt-4 flex-sm-row flex-column">
       <div class="d-flex align-items-center">
       <span class="material-icons text-success">stop</span>
         <span>Αρκετές θέσεις</span>
@@ -63,7 +63,7 @@
         Κάνετε σύνδεση για κράτηση
       </button>
 
-      <button class="m-2"
+      <button class="m-2 p-2"
         *ngIf="authService.isAdmin()"
         mat-raised-button
         color="accent"
@@ -72,7 +72,7 @@
         Επεξεργασία πλάνου
       </button>
 
-      <button class="m-2"
+      <button class="m-2 p-2"
         *ngIf="authService.isAdmin()"
         mat-raised-button
         color="accent"

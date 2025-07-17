@@ -13,7 +13,24 @@
     <a class="cursor-pointer mb-0 text-white small me-2 text-decoration-none" role="button" routerLink="">
       {{authService.currentUser()?.username}}
     </a>
-    <button class="btn btn-sm btn-outline-light ms-2" (click)="logout()">Logout</button>
+    </div>
+    <button *ngIf="authService.currentUser()" class="btn btn-sm btn-outline-light ms-2" (click)="logout()">Logout</button>
+    <button *ngIf="!authService.currentUser()" class="btn btn-sm btn-outline-light ms-2" (click)="login()">Login</button>
   </div>
-</div>
+
 </nav>
+
+<nav class="mt-1 navbar navbar-dark bg-dark navbar-expand-lg d-flex justify-content-end">
+
+  <div class="px-4 d-flex align-items-center gap-4">
+
+<!--    <a class="navbar-text text-decoration-none cursor-pointer " role="button" [routerLink]="['app-login']" [routerLinkActive] = "['active']">Είσοδος στην εφαρμογή</a>-->
+<!--    <a class="navbar-text text-decoration-none cursor-pointer" role="button" [routerLink]="['app-register']" [routerLinkActive] = "['active']">Εγγραφή νέου χρήστη</a>-->
+    <a class="navbar-text text-decoration-none cursor-pointer " role="button" *ngIf="authService.isAdmin()" [routerLink]="['app-play']" [routerLinkActive] = "['active']">Προσθήκη έργου</a>
+    <a class="navbar-text text-decoration-none cursor-pointer" role="button"*ngIf="authService.isAdmin()" [routerLink]="['app-show']" [routerLinkActive] = "['active']">Προσθήκη παραστάσεων</a>
+    <a class="navbar-text text-decoration-none cursor-pointer" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</a>
+
+  </div>
+
+</nav>
+
