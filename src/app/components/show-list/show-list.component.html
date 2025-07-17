@@ -16,11 +16,25 @@
       </p>
       <p><strong>Διάρκεια:</strong> {{ playDuration }} mins</p>
     </mat-card-content>
+    <mat-card-footer class="px-4 pt-4 d-flex align-items-center justify-content-end">
+      <div class="d-flex align-items-center">
+      <span class="material-icons text-success">stop</span>
+        <span>Αρκετές θέσεις</span>
+      </div>
+      <div class="d-flex align-items-center px-4">
+        <span class="material-icons text-warning">stop</span>
+        <span>Περιορισμένες θέσεις</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="material-icons text-danger">stop</span>
+        <span>Sold out</span>
+      </div>
+    </mat-card-footer>
 </mat-card>
 
 
-  <mat-card class="green-card mb-2" *ngFor="let show of shows" >
-   
+  <mat-card class="{{show.cardColour}} mb-2" *ngFor="let show of shows" >
+
     <mat-card-content class="m-2">
       <div class="gap-16">
         <div class="mb-2"><strong>Ημερομηνία</strong> {{ show.showDate | date: 'dd-MM-yyyy' }}</div>
@@ -34,6 +48,7 @@
         *ngIf="token && !isAdmin"
         mat-raised-button
         color="accent"
+              [disabled]="show.cardColour === 'red-card'"
         (click)="onEditShow(show)"
       >
         Επιλογή θέσης

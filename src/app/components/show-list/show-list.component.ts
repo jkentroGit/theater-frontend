@@ -1,4 +1,4 @@
-import { Component,  inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
@@ -12,6 +12,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Show } from '../../shared/interfaces/show';
 import { ShowService } from '../../services/show.service';
 import { PlayService } from '../../services/play.service';
+import { Row } from '../../shared/interfaces/row-seat';
+import { Seat} from '../../shared/interfaces/row-seat';
 
 
 @Component({
@@ -43,7 +45,7 @@ export class ShowListComponent {
 ) {}
 
   shows: Show[] = [];
-  
+
   playId: String = '';
   playTitle: String = '';
   playYear: String = '';
@@ -51,12 +53,11 @@ export class ShowListComponent {
   playCast: String = '';
   playDuration: String = '';
 
+  cardColour: string = "green-card";
 
- 
+
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
-
-   
 
     this.token = localStorage.getItem('token');
            if (this.token) {
@@ -68,7 +69,7 @@ export class ShowListComponent {
             this.isAdmin = false;
           }
         };
-    
+
 
     if (code) {
       this.playService.getPlayByCode(code).subscribe({
@@ -79,7 +80,7 @@ export class ShowListComponent {
           this.playDirector = res.data.director || '';
           this.playCast = res.data.cast || '';
           this.playDuration = res.data.duration || '';
-          
+
           this.loadPlayShows();
 
         },
@@ -109,7 +110,7 @@ onDeleteShow(show: Show) {
 
     },
     error: (err) => {
-      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000 });   
+      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000 });
     }
   });
   }
@@ -118,7 +119,9 @@ loadPlayShows() {
   this.showService.getAllShows().subscribe({
     next: (res) => {
        this.shows = res.data.filter(show => show.playId === this.playId);
-
+      for (const show of this.shows) {
+        this.watchAvailability(show);
+      }
     },
     error: (err) => {
       console.error('Failed to load shows', err);
@@ -130,6 +133,37 @@ login () {
   this.router.navigate(['app-login']);
 }
 
+watchAvailability(show: Show) {
+
+    let seatCounter = 0;
+    let bookedCounter = 0;
+
+    this.showService.getShowById(show._id!).subscribe({
+      next: (res) => {
+        const showData = res.data;
+        const rows = showData.rows;
+        for (const row in rows) {
+          const seats = rows[row].seats;
+          for (const seat in seats) {
+              seatCounter++;
+            if (seats[seat].status === 'BOOKED') {
+              bookedCounter++;
+            }
+          }
+        }
+        if (bookedCounter !== 0 && seatCounter === bookedCounter) {
+          show.cardColour = "red-card";
+        } else if (bookedCounter !== 0 && (seatCounter / bookedCounter) < 2) {
+          show.cardColour = "yellow-card";
+        } else {
+          show.cardColour = "green-card";
+        }
+    },
+      error: (err) => {
+        console.error('Failed to load shows', err);
+      }
+})
+}
 }
 
 

@@ -9,4 +9,5 @@ export interface Show {
   showDate: Date;
   price: number;
   rows: Row[];
+  cardColour?: string;
 }
