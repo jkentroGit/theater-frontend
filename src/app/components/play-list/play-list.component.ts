@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowService } from '../../services/show.service';
 import { AuthService} from '../../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @Component({
   selector: 'app-play-list',
@@ -22,7 +25,8 @@ import { AuthService} from '../../services/auth.service';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ],
   templateUrl: './play-list.component.html',
   styleUrls: ['./play-list.component.css']

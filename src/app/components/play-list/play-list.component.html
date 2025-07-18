@@ -14,9 +14,9 @@
       </p>
       <p><strong>Διάρκεια:</strong> {{ play.duration }} mins</p>
     </mat-card-content>
+<mat-card-actions class="m-4 text-center d-flex justify-content-center">
 
-<mat-card-actions class="m-2">
-
+  <div class="d-none d-md-block">
   <button class="mx-2"
     mat-raised-button
     color="accent"
@@ -42,4 +42,36 @@
   >
     Εμφάνιση παραστάσεων
   </button>
+  </div>
+
+  <div class="d-md-none d-flex gap-4">
+    <button class="px-2 text-center"
+            mat-raised-button
+            color="accent"
+            *ngIf="authService.isAdmin()"
+            (click)="onEditPlay(play)"
+            matTooltip="Επεξεργασία έργου"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button class=""
+            mat-raised-button
+            color="warn"
+            *ngIf="authService.isAdmin()"
+            (click)="onDeletePlay(play)"
+            matTooltip="Διαγραφή έργου"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button class=""
+            mat-raised-button
+            color="primary"
+            (click)="onFindShow(play)"
+            matTooltip="Εμφάνιση παραστάσεων"
+    >
+      <mat-icon>format_list_bulleted</mat-icon>
+    </button>
+  </div>
 </mat-card-actions>
