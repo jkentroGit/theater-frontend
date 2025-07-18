@@ -77,11 +77,11 @@ onSubmit() {
 
     this.playService.updatePlay(playData.code, playData).subscribe({
       next: () => {
-        this.snackBar.open('Το έργο κατωχηρώθηκε επιτυχημένα', '', { duration: 3000 });
+        this.snackBar.open('Το έργο κατοχηρώθηκε επιτυχημένα', '', { duration: 3000 });
         this.router.navigate(['/app-play-list']);
       },
       error: () => {
-        this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', { duration: 3000 });
+        this.snackBar.open('Αποτυχία κατοχήρωσης έργου', '', { duration: 3000 });
       }
     });
   }
