@@ -1,15 +1,15 @@
-<nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-center justify-content-md-between">
 
   <div class="d-flex justify-content-end align-items-center">
     <span class="m-2 material-symbols-outlined text-white">confirmation_number</span>
-    <a class="navbar-brand cursor-pointer px-4" role="button" routerLink="app-play">
+    <a class="navbar-brand cursor-pointer px-2" role="button" routerLink="app-play">
       Διαχείρηση κρατήσεων
     </a>
   </div>
 
   <div class="px-4 d-flex align-items-center gap-2">
     <div *ngIf="authService.currentUser()">
-    <span class="text-white small me-2">Logged in as:</span>
+    <span class="text-white-50 small ">Logged in as: </span>
     <a class="cursor-pointer mb-0 text-white small me-2 text-decoration-none" role="button" routerLink="">
       {{authService.currentUser()?.username}}
     </a>
@@ -20,15 +20,15 @@
 
 </nav>
 
-<nav class="mt-1 navbar navbar-dark bg-dark navbar-expand-lg d-flex justify-content-end">
+<nav class="mt-1 mb-4 navbar navbar-dark bg-dark-subtle navbar-expand-lg d-flex justify-content-end px-4">
 
   <div class="px-4 d-flex align-items-center gap-4">
 
 <!--    <a class="navbar-text text-decoration-none cursor-pointer " role="button" [routerLink]="['app-login']" [routerLinkActive] = "['active']">Είσοδος στην εφαρμογή</a>-->
 <!--    <a class="navbar-text text-decoration-none cursor-pointer" role="button" [routerLink]="['app-register']" [routerLinkActive] = "['active']">Εγγραφή νέου χρήστη</a>-->
-    <a class="navbar-text text-decoration-none cursor-pointer " role="button" *ngIf="authService.isAdmin()" [routerLink]="['app-play']" [routerLinkActive] = "['active']">Προσθήκη έργου</a>
-    <a class="navbar-text text-decoration-none cursor-pointer" role="button"*ngIf="authService.isAdmin()" [routerLink]="['app-show']" [routerLinkActive] = "['active']">Προσθήκη παραστάσεων</a>
-    <a class="navbar-text text-decoration-none cursor-pointer" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</a>
+    <a class="navbar-text text-decoration-none cursor-pointer text-black fw-bold" role="button" *ngIf="authService.isAdmin()" [routerLink]="['app-play']" [routerLinkActive] = "['active']">Προσθήκη έργου</a>
+    <a class="navbar-text text-decoration-none cursor-pointer text-black fw-bold" role="button"*ngIf="authService.isAdmin()" [routerLink]="['app-show']" [routerLinkActive] = "['active']">Προσθήκη παραστάσεων</a>
+    <a class="navbar-text text-decoration-none cursor-pointer text-black fw-bold" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</a>
 
   </div>
 

@@ -79,14 +79,14 @@ getSeatIcon(status: string): string {
 getSeatColour(status: string): string {
   switch (status) {
     case 'AVAILABLE':
-      return 'text-success mat-icon-large';
+      return 'text-success ';
 
     case 'SELECTED':
-      return 'text-primary mat-icon-large';
+      return 'text-primary ';
     case 'BOOKED':
-      return 'text-gray mat-icon-large';
+      return 'text-gray';
     default:
-      return 'text-success mat-icon-large';
+      return 'text-success ';
   }
 }
 
