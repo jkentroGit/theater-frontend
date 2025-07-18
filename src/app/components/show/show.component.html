@@ -1,11 +1,10 @@
-<form [formGroup]="form" class="form" style="display: flex; flex-direction: column; max-width: 400px;">
-
+<form [formGroup]="form" class="form d-flex flex-column mx-auto">
 
   <mat-form-field appearance="fill">
     <mat-label>Κωδικός έργου</mat-label>
     <input style="text-transform: uppercase" matInput formControlName="playCode" >
   </mat-form-field>
-  
+
 <mat-form-field appearance="fill">
   <mat-label>Μέρες παραστάσεων</mat-label>
   <mat-select formControlName="daysOfWeek" multiple>
