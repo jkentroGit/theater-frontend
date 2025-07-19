@@ -34,9 +34,9 @@ import { MatIconModule } from '@angular/material/icon';
 export class PlayListComponent {
 
 
-  constructor(private router: Router, private snackBar: MatSnackBar, public authService: AuthService) {}
-  private playService = inject(PlayService);
-  private showService = inject(ShowService);
+  constructor(private router: Router, private snackBar: MatSnackBar, 
+    public authService: AuthService, private playService: PlayService, private showService: ShowService) {}
+
   plays: Play[] = [];
 
   loadAllPlays() {
