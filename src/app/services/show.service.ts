@@ -29,7 +29,7 @@ export class ShowService {
   );
 }
 
-  deleteShow(showId: string): Observable<any> {
+deleteShow(showId: string): Observable<any> {
 
   const token = localStorage.getItem('token') || '';
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -41,7 +41,7 @@ export class ShowService {
   createShow(showData: Show): Observable<any> {
   const token = localStorage.getItem('token') || '';
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
   return this.http.post(`${this.baseUrl}`,  showData , { headers });
 }
 

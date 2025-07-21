@@ -8,7 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService} from '../../services/auth.service';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -21,7 +21,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class SeatPlanComponent {
   seatingPlan: Row[] = [];
   showId!: string;
-  purchaseConfirmed = false;
 
   constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location, public authService: AuthService, private dialog: MatDialog) {}
 
@@ -34,9 +33,13 @@ export class SeatPlanComponent {
    }
 
   openDialog() {
+
+    this.showService.getShowById(this.showId!).subscribe(response => {
+      const show = response.data;
+    });
+
     this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      // panelClass: 'bootstrap-dialog' // Optional, for custom styling
+      width: '400px'
     }).afterClosed().subscribe(result => {
       if (result) {
         this.onClickHandler();
@@ -125,11 +128,13 @@ toggleAdmin(seat: Seat) {
   }
 onClickHandler() {
 
-
-  const seatsToUpdate = [];
+    const seatsToUpdate = [];
 
   for (const row of this.seatingPlan) {
     for (const seat of row.seats) {
+
+      if (seat.status === 'SELECTED') {
+      }
       if (seat.status === 'SELECTED' || seat.status === 'BOOKED') {
         seat.status = 'BOOKED';
         const label = String(seat.seatNumber);
