@@ -15,10 +15,9 @@ export const routes: Routes = [
     { path:'app-register', component:RegisterComponent },
     { path: 'app-seat-plan', component:SeatPlanComponent},
     { path: 'app-play', component:PlayComponent},
-    { path: 'app-show', component:ShowComponent},
+    { path: 'app-show/:code', component:ShowComponent},
     { path: 'app-play-list', component:PlayListComponent},
     { path: 'play/edit/:code', component: PlayEditComponent},
     { path: 'show/find/:code', component: ShowListComponent},
     { path: 'show/edit/:id', component: SeatPlanComponent}
 ];
-

@@ -6,27 +6,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { HttpClient } from '@angular/common/http';
 import { PlayService } from '../../services/play.service';
 import { ShowService } from '../../services/show.service';
-import { 
-  FormControl, 
-  FormGroup, 
-  ReactiveFormsModule, 
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
   Validators
 } from '@angular/forms';
 import { Show } from '../../shared/interfaces/show';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-show',
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -38,9 +38,7 @@ import { Router } from '@angular/router';
 })
 export class ShowComponent {
 
-
-private http = inject(HttpClient);
-constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar, private router: Router) {}
+constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {}
 
 
 days = [
@@ -54,38 +52,28 @@ days = [
 ];
 
   form =new FormGroup ({
-    playCode: new FormControl ('', [Validators.required]),
+    // playCode: new FormControl ('', [Validators.required]),
     daysOfWeek: new FormControl ([], [Validators.required]),
     fromDate: new FormControl ('', Validators.required),
     toDate: new FormControl ('', Validators.required),
     time: new FormControl ('', [Validators.required]),
-    price: new FormControl ('', [Validators.required]) 
+    price: new FormControl ('', [Validators.required])
   }
   );
 
 onSubmit() {
-  const playCode = (this.form.get('playCode')?.value ?? '').toUpperCase();
 
-  if (!playCode) {
-    
-            this.snackBar.open('Ο κωδικός είναι υποχρεωτικός', '', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            
-      });
+  const code = this.route.snapshot.paramMap.get('code');
+  console.log(code)
 
-      return
-  }
-
-  this.playService.getPlayByCode(playCode).subscribe({
+  this.playService.getPlayByCode(code?.toUpperCase() || '').subscribe({
     next: (response) => {
       if (!response.status) {
         this.snackBar.open('Το έργο δεν βρέθηκε', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-            
+
       });
         return;
       }
@@ -107,37 +95,45 @@ onSubmit() {
             time: this.form.get('time')?.value || '',
             price: Number(this.form.get('price')?.value || 0),
             rows: []
-          };       
+          };
 
           this.showService.createShow(showData).subscribe({
-           next: (res) => {         
+           next: (res) => {
+
+             //Προσθήκη μιας παράστασης//
+
            },
            error: (err) => {
             this.snackBar.open('Αποτυχία προσθήκης παραστάσεων', '', {
             duration: 3000,
             horizontalPosition: 'right',
-            verticalPosition: 'bottom',            
+            verticalPosition: 'bottom',
       });
-           
-    
-    }
+        }
           });
         }
-      } 
+      }
+        //Προσθήκη όλων των παραστάσεων//
             this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
                   duration: 3000,
                   horizontalPosition: 'right',
-                  verticalPosition: 'bottom'            
+                  verticalPosition: 'bottom'
             });
-            this.router.navigate(['/app-play-list']);
-            
+
     }, error: (err) => {
             this.snackBar.open('Το έργο δεν βρέθηκε', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-            
-      });}
-  });
+
+      });
+    }
+
+
+   });
+
+    setTimeout(() => {
+    this.router.navigate(['/app-play-list']);
+  }, 3000);
 }
 }

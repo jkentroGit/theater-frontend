@@ -84,18 +84,24 @@ onEditShow(show: Show) {
 onDeleteShow(show: Show) {
 
     if (!show._id) {
-    this.snackBar.open('Η παράσταση δεν έχει έγκυρο ID', '', { duration: 3000 });
+    this.snackBar.open('Η παράσταση δεν έχει έγκυρο ID', '', { duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom' });
     return;
   }
 
    this.showService.deleteShow(show._id).subscribe({
     next: (res) => {
-      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000 });
+      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom' });
       this.loadPlayShows();
 
     },
     error: (err) => {
-      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000 });
+      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom' });
     }
   });
   }
@@ -103,7 +109,8 @@ onDeleteShow(show: Show) {
 loadPlayShows() {
   this.showService.getAllShows().subscribe({
     next: (res) => {
-       this.shows = res.data.filter(show => show.playId === this.playId);
+       this.shows = res.data.filter(show => show.playId === this.playId)
+         .sort((a, b) => new Date(a.showDate).getTime() - new Date(b.showDate).getTime());
       for (const show of this.shows) {
         this.watchAvailability(show);
       }

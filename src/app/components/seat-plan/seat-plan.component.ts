@@ -53,11 +53,21 @@ export class SeatPlanComponent {
         if (res.status) {
           this.seatingPlan = res.data.rows;
         } else {
-          console.error('Failed to load seating plan');
+          this.snackBar.open('Το πλάνο δεν βρέθηκε', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+
+          });
         }
       },
       error: (err) => {
-        console.error('Error loading seating plan:', err);
+        this.snackBar.open('Αποτυχία φόρτωσης πλάνου', '', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+
+        });
       }
     });
   }
@@ -80,7 +90,6 @@ getSeatColour(status: string): string {
   switch (status) {
     case 'AVAILABLE':
       return 'text-success ';
-
     case 'SELECTED':
       return 'text-primary ';
     case 'BOOKED':

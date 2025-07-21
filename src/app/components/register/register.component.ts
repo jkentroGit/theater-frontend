@@ -91,7 +91,7 @@ onSubmit() {
        this.http.post('http://localhost:3000/api/users', data).subscribe({
         next: (response) => {
 
-        this.snackBar.open('Επιτυχής κατοχήρωση χρήστη', '', {
+        this.snackBar.open('Επιτυχής κατοχύρωση χρήστη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
@@ -100,7 +100,7 @@ onSubmit() {
       this.router.navigate(['app-login']);
     },
       error: (err) => {
-        this.snackBar.open('Αποτυχία κατοχήρωσης χρήστη', '', {
+        this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',

@@ -1,4 +1,4 @@
-import { Component,  inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayService } from '../../services/play.service';
 import { MatCardModule } from '@angular/material/card';
@@ -34,8 +34,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class PlayListComponent {
 
 
-  constructor(private router: Router, private snackBar: MatSnackBar, 
-    public authService: AuthService, private playService: PlayService, private showService: ShowService) {}
+  constructor(private router: Router, private snackBar: MatSnackBar,
+    public authService: AuthService, private playService: PlayService, private showService: ShowService, ) {}
 
   plays: Play[] = [];
 
@@ -45,7 +45,7 @@ export class PlayListComponent {
       this.plays = res.data;
     },
     error: (err) => {
-      console.error('Failed to load plays', err);
+      this.snackBar.open('Αποτυχία εύρεσης παραστάσεων', '', { duration: 3000 });
     }
   });
 }
@@ -67,24 +67,30 @@ export class PlayListComponent {
 
       this.showService.deleteShowsByPlayId(play._id!).subscribe({
         next: (res) => {
-          this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000 });
+          this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000, horizontalPosition: 'right',
+            verticalPosition: 'bottom' });
 
           this.loadAllPlays();
         },
         error: () => {
-          this.snackBar.open('Το έργο διαγράφηκε, αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000 });
+          this.snackBar.open('Το έργο διαγράφηκε, αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000, horizontalPosition: 'right',
+            verticalPosition: 'bottom' });
           this.loadAllPlays();
         }
       });
     },
     error: () => {
-      this.snackBar.open('Αποτυχία διαγραφής έργου', '', { duration: 3000 });
+      this.snackBar.open('Αποτυχία διαγραφής έργου', '', { duration: 3000, horizontalPosition: 'right',
+        verticalPosition: 'bottom' });
     }
   });
 }
 
-  onFindShow(play: Play) {{
+  onFindShow(play: Play) {
   this.router.navigate(['/show/find', play.code]);
   }
+
+  onAddShow(play: Play) {
+  this.router.navigate(['app-show', play.code]);
 }
 }

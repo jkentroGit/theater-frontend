@@ -19,7 +19,6 @@
   <div class="d-none d-md-block">
   <button class="mx-2"
     mat-raised-button
-    color="accent"
     *ngIf="authService.isAdmin()"
     (click)="onEditPlay(play)"
   >
@@ -28,7 +27,6 @@
 
   <button class="mx-2"
     mat-raised-button
-    color="warn"
     *ngIf="authService.isAdmin()"
     (click)="onDeletePlay(play)"
   >
@@ -37,17 +35,23 @@
 
   <button class="mx-2"
     mat-raised-button
-    color="primary"
     (click)="onFindShow(play)"
   >
     Εμφάνιση παραστάσεων
   </button>
+
+    <button class="mx-2"
+            mat-raised-button
+            *ngIf="authService.isAdmin()"
+            (click)="onAddShow(play)"
+    >
+      Προσθήκη παραστάσεων
+    </button>
   </div>
 
   <div class="d-md-none d-flex gap-4">
     <button class="px-2 text-center"
             mat-raised-button
-            color="accent"
             *ngIf="authService.isAdmin()"
             (click)="onEditPlay(play)"
             matTooltip="Επεξεργασία έργου"
@@ -57,7 +61,6 @@
 
     <button class=""
             mat-raised-button
-            color="warn"
             *ngIf="authService.isAdmin()"
             (click)="onDeletePlay(play)"
             matTooltip="Διαγραφή έργου"
@@ -67,11 +70,20 @@
 
     <button class=""
             mat-raised-button
-            color="primary"
             (click)="onFindShow(play)"
             matTooltip="Εμφάνιση παραστάσεων"
     >
       <mat-icon>format_list_bulleted</mat-icon>
     </button>
+
+    <button class=""
+            mat-raised-button
+            *ngIf="authService.isAdmin()"
+            (click)="onAddShow(play)"
+            matTooltip="Προσθήκη παραστάσεων"
+    >
+      <mat-icon>add_circle</mat-icon>
+    </button>
+
   </div>
 </mat-card-actions>

@@ -9,7 +9,6 @@ import {
   Validators
 } from '@angular/forms';
 import { Play } from '../../shared/interfaces/play';
-import { HttpClient } from '@angular/common/http';
 import { PlayService } from '../../services/play.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -31,9 +30,8 @@ import { Router } from '@angular/router';
 })
 export class PlayEditComponent {
 
-    private http = inject(HttpClient);
     constructor(private playService: PlayService, private snackBar: MatSnackBar,
-    private route: ActivatedRoute, private router: Router) {}
+    private route: ActivatedRoute, private router: Router,) {}
 
     ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
@@ -77,11 +75,15 @@ onSubmit() {
 
     this.playService.updatePlay(playData.code, playData).subscribe({
       next: () => {
-        this.snackBar.open('Το έργο κατοχηρώθηκε επιτυχημένα', '', { duration: 3000 });
+        this.snackBar.open('Το έργο κατοχηρώθηκε επιτυχημένα', '', { duration: 3000,  horizontalPosition: 'right',
+          verticalPosition: 'bottom'
+        });
         this.router.navigate(['/app-play-list']);
       },
       error: () => {
-        this.snackBar.open('Αποτυχία κατοχήρωσης έργου', '', { duration: 3000 });
+        this.snackBar.open('Αποτυχία κατοχήρωσης έργου', '', { duration: 3000,  horizontalPosition: 'right',
+          verticalPosition: 'bottom'
+        });
       }
     });
   }

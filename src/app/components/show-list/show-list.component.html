@@ -37,8 +37,9 @@
 
     <mat-card-content class="m-2">
       <div class="gap-16">
-        <div class="mb-2"><strong>Ημερομηνία</strong> {{ show.showDate | date: 'dd-MM-yyyy' }}</div>
-        <div><strong>Ώρα</strong> {{ show.time }}</div>
+        <div class="mb-2"><strong>Ημερομηνία:</strong> {{ show.showDate | date: 'dd-MM-yyyy' }}</div>
+        <div class="mb-2"><strong>Ημέρα:</strong> {{ show.showDate | date: 'EEEE'  }}</div>
+        <div><strong>Ώρα:</strong> {{ show.time }}</div>
       </div>
     </mat-card-content>
 
@@ -47,7 +48,7 @@
       <button class="m-2"
         *ngIf="token && !this.authService.isAdmin()"
         mat-raised-button
-        color="accent"
+
         [disabled]="show.cardColour === 'red-card'"
         (click)="onEditShow(show)"
       >
@@ -57,7 +58,6 @@
       <button class="m-2"
         *ngIf="!token"
         mat-raised-button
-        color="accent"
         (click)="login()"
       >
         Κάνετε σύνδεση για κράτηση
@@ -66,7 +66,6 @@
       <button class="m-2 p-2"
         *ngIf="authService.isAdmin()"
         mat-raised-button
-        color="accent"
         (click)="onEditShow(show)"
       >
         Επεξεργασία πλάνου
@@ -75,7 +74,6 @@
       <button class="m-2 p-2"
         *ngIf="authService.isAdmin()"
         mat-raised-button
-        color="accent"
         (click)="onDeleteShow(show)"
       >
         Διαγραφή παράστασης

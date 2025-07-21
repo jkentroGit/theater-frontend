@@ -2,11 +2,11 @@ import { Component, inject} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { 
-  FormControl, 
-  FormGroup, 
-  ReactiveFormsModule, 
-  Validators 
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { Play } from '../../shared/interfaces/play';
 import { HttpClient } from '@angular/common/http';
@@ -17,11 +17,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-play',
-  standalone: true,  
+  standalone: true,
   imports: [
-    MatButtonModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     MatSnackBarModule
   ],
@@ -39,7 +39,7 @@ export class PlayComponent {
     year: new FormControl ('', [Validators.required]),
     director: new FormControl ('', Validators.required),
     cast: new FormControl ('', Validators.required),
-    duration: new FormControl ('', [Validators.required])        
+    duration: new FormControl ('', [Validators.required])
   }
   );
 
@@ -53,10 +53,10 @@ onSubmit() {
       'cast':this.form.get('cast')?.value || '',
       'duration': this.form.get('duration')?.value || ''}
 
-      
+
        this.playService.getPlayByCode(playData.code).subscribe({
       next: () => {
-    
+
       this.snackBar.open('Ο κωδικός έργου πρέπει να είναι μοναδικός', 'Close', {
         duration: 3000,
         horizontalPosition: 'right',
@@ -66,18 +66,18 @@ onSubmit() {
        error: (err) => {
         //Αν δεν βρέθηκε ο κωδικός//
         if (err.status === 404) {
-      
+
         this.playService.createPlay(playData).subscribe({
           next: () => {
-            this.snackBar.open('Το έργο κατωχηρώθηκε επιτυχημένα', '', {
+            this.snackBar.open('Το έργο κατοχυρώθηκε επιτυχημένα', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
             });
-            this.router.navigate(['app-play-list']);  
+            this.router.navigate(['app-play-list']);
           },
           error: () => {
-            this.snackBar.open('Αποτυχία κατωχήρωσης έργου', '', {
+            this.snackBar.open('Αποτυχία κατοχύρωσης έργου', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -85,7 +85,7 @@ onSubmit() {
           }
         });
       } else {
-        //αν είναι άλλο το error από 404//
+        //αν είναι άλλο το error//
         this.snackBar.open('Λάθος. Δοκιμάστε ξανά', '', {
           duration: 3000,
           horizontalPosition: 'right',

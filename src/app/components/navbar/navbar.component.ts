@@ -6,6 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-navbar',
@@ -15,13 +16,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router, public authService: AuthService) {}
+  constructor(private router: Router, public authService: AuthService, private snackBar: MatSnackBar) {}
 
   username: string = '';
 
 
     logout() {
       this.authService.logout();
+      this.snackBar.open('Επιτυχής αποσύνδεση', '', { duration: 3000,  horizontalPosition: 'right',
+        verticalPosition: 'bottom',});
       this.router.navigate(['app-login']);
     }
 
