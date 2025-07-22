@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -38,26 +38,31 @@ export class RegisterComponent {
 
     private http = inject(HttpClient);
     constructor(private snackBar: MatSnackBar, private router: Router, public authService: AuthService) {}
+    private isDBEmpty: boolean = false;
+    private allUsers: User[] = [];
 
-   form =new FormGroup ({
-    username: new FormControl ('', [Validators.required]),
+
+    form =new FormGroup ({
+    username: new FormControl ('', [Validators.required, Validators.maxLength(20)]),
     password: new FormControl ('', [Validators.required, Validators.minLength(8)]),
     confirmPassword: new FormControl ('', [Validators.required, Validators.minLength(8)]),
-    firstname: new FormControl ('', Validators.required),
-    lastname: new FormControl ('', Validators.required),
+    firstname: new FormControl ('', [Validators.required, Validators.maxLength(20)]),
+    lastname: new FormControl ('',[Validators.required, Validators.maxLength(20)]),
     address: new FormGroup ({
       street: new FormControl ('', Validators.required),
       streetNum: new FormControl ('', Validators.required),
       city: new FormControl ('', Validators.required),
       tk: new FormControl ('', Validators.required)
     }),
-    mobile: new FormControl ('', [Validators.required]),
+    mobile: new FormControl ('', [Validators.required, Validators.maxLength(20)]),
     email: new FormControl ('', [Validators.required, Validators.email]),
     role: new FormControl ('')
 
   },this.passwordConfirmValidator,
 
   );
+
+
   passwordConfirmValidator(control: AbstractControl): {[key:string]: boolean} | null {
     const form = control as FormGroup;
 
@@ -68,47 +73,50 @@ export class RegisterComponent {
       form.get('confirmPassword')?.setErrors({passwordMismatch: true})
       return {passwordMismatch: true}
     }
-
     return null
   }
 
-onSubmit() {
-  const data: User = {
-      'username': this.form.get('username')?.value || '',
-      'firstname': this.form.get('firstname')?.value || '',
-      'lastname': this.form.get('lastname')?.value || '',
-      'email':this.form.get('email')?.value || '',
-      'mobile':this.form.get('mobile')?.value || '',
-      'address': {
-        'street':this.form.controls.address.controls.street?.value || '',
-        'streetNum': this.form.controls.address.controls.streetNum?.value || '',
-        'city': this.form.controls.address.controls.city?.value || '',
-        'tk': this.form.controls.address.controls.tk?.value || ''},
-      'role' : this.form.get('role')?.value || 'USER',
-      'password': this.form.get('password')?.value || ''}
+  onSubmit() {
 
+    // Ο πρώτος χρήστης να γίνεται ADMIN
 
-       this.http.post('http://localhost:3000/api/users', data).subscribe({
-        next: (response) => {
+    this.authService.getAllUsers().subscribe((response) => {
+      const isDBEmpty = response.data.length === 0;
 
-        this.snackBar.open('Επιτυχής κατοχύρωση χρήστη', '', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
+      const data: User = {
+        username: this.form.get('username')?.value || '',
+        firstname: this.form.get('firstname')?.value || '',
+        lastname: this.form.get('lastname')?.value || '',
+        email: this.form.get('email')?.value || '',
+        mobile: this.form.get('mobile')?.value || '',
+        address: {
+          street: this.form.controls.address.controls.street?.value || '',
+          streetNum: this.form.controls.address.controls.streetNum?.value || '',
+          city: this.form.controls.address.controls.city?.value || '',
+          tk: this.form.controls.address.controls.tk?.value || ''
+        },
+        role: isDBEmpty ? 'ADMIN' : 'USER',
+        password: this.form.get('password')?.value || ''
+      };
 
+      this.http.post('http://localhost:3000/api/users', data).subscribe({
+        next: () => {
+          this.snackBar.open('Επιτυχής κατοχύρωση χρήστη', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+          });
+          this.router.navigate(['app-login']);
+        },
+        error: () => {
+          this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+          });
+        }
       });
-      this.router.navigate(['app-login']);
-    },
-      error: (err) => {
-        this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-
-      });
-      this.form.reset();}
     });
-
-};
-
+  }
 }
+

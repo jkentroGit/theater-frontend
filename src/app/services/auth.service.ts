@@ -1,15 +1,24 @@
-import {computed, Injectable, signal} from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { User } from '../shared/interfaces/user';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Play } from '../shared/interfaces/play';
 
 @Injectable({ providedIn: 'root' })
 
 export class AuthService {
 
+  private baseUrl = 'http://localhost:3000/api/users';
+
   constructor(private http: HttpClient) {}
 
   currentUser = signal<User | null>(this.getUserFromToken());
+
   isAdmin = computed(() => this.currentUser()?.role === 'ADMIN'); //αλλαγή isAdmin με signal
+
+  getAllUsers(): Observable<{ status: boolean; data: User[] }> {
+    return this.http.get<{ status: boolean; data: User[] }>(this.baseUrl);
+  };
 
   getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || '';
@@ -26,6 +35,10 @@ export class AuthService {
     localStorage.removeItem('token');
     this.currentUser.set(null);
   }
+
+  getUserByEmail(email: string): Observable<{ status: boolean; data: Play }> {
+    return this.http.get<{ status: boolean; data: Play }>(`${this.baseUrl}/email/${email}`);
+  };
 
   private getUserFromToken(): User | null {
     const token = localStorage.getItem('token');

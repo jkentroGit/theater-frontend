@@ -78,7 +78,7 @@
         <mat-form-field>
         <mat-label>Επαλήθευση κωδικού</mat-label>
         <input type="password" matInput formControlName="confirmPassword"/>
-        <mat-error *ngIf="form.get('confirmPassword')?.hasError('passwordMismatch')">Οι κωδικοί δεν ταιριάζουν</mat-error>
+        <mat-error *ngIf="form.get('confirmPassword')!.hasError('passwordMismatch')">Οι κωδικοί δεν ταιριάζουν</mat-error>
 
       </mat-form-field>
 
@@ -87,7 +87,7 @@
         color="primary"
         [disabled]="form.invalid"
         (click)="onSubmit()"
-        >Κατοχήρωση χρήστη
+        >Κατοχύρωση χρήστη
       </button>
 
     </form>
