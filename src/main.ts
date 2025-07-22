@@ -14,4 +14,5 @@ bootstrapApplication(AppComponent, {
     { provide: LOCALE_ID, useValue: 'el' }
   ]
 }).catch((err) => console.error(err));
+
 registerLocaleData(localeEl);
