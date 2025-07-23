@@ -59,9 +59,7 @@ export class RegisterComponent {
     role: new FormControl ('')
 
   },this.passwordConfirmValidator,
-
   );
-
 
   passwordConfirmValidator(control: AbstractControl): {[key:string]: boolean} | null {
     const form = control as FormGroup;
@@ -106,7 +104,9 @@ export class RegisterComponent {
             horizontalPosition: 'right',
             verticalPosition: 'bottom'
           });
-          this.router.navigate(['app-login']);
+          setTimeout(() => {
+            this.router.navigate(['/app-login']);
+          }, 2000);
         },
         error: () => {
           this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {

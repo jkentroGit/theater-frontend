@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
 export class PlayEditComponent {
 
     constructor(private playService: PlayService, private snackBar: MatSnackBar,
-    private route: ActivatedRoute, private router: Router,) {}
+    private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');

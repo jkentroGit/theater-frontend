@@ -25,6 +25,12 @@ export class AuthService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
+  deleteUser(username: string): Observable<any> {
+    const headers = this.getAuthHeaders()
+    return this.http.delete(`${this.baseUrl}/${username}`, { headers });
+
+  };
+
   login(token: string) {
     localStorage.setItem('token', token);
     const user = this.decodeUserFromToken(token);

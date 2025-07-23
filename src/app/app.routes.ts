@@ -7,6 +7,7 @@ import { ShowComponent } from './components/show/show.component';
 import { PlayListComponent } from './components/play-list/play-list.component';
 import { PlayEditComponent } from './components/play-edit/play-edit.component';
 import { ShowListComponent } from './components/show-list/show-list.component';
+import {UserListComponent} from './components/user-list/user-list.component';
 
 
 export const routes: Routes = [
@@ -19,5 +20,6 @@ export const routes: Routes = [
     { path: 'app-play-list', component:PlayListComponent},
     { path: 'play/edit/:code', component: PlayEditComponent},
     { path: 'show/find/:code', component: ShowListComponent},
-    { path: 'show/edit/:id', component: SeatPlanComponent}
+    { path: 'show/edit/:id', component: SeatPlanComponent},
+    { path: 'app-user-list', component: UserListComponent}
 ];
