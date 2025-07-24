@@ -34,10 +34,6 @@ export class SeatPlanComponent {
 
   openDialog() {
 
-    this.showService.getShowById(this.showId!).subscribe(response => {
-      const show = response.data;
-    });
-
     this.dialog.open(ConfirmDialogComponent, {
       width: '400px'
     }).afterClosed().subscribe(result => {
@@ -76,29 +72,29 @@ export class SeatPlanComponent {
   }
 
 
-getSeatIcon(status: string): string {
-  switch (status) {
-    case 'AVAILABLE':
-      return 'crop_square';
-    case 'SELECTED':
-      return 'check_box';
-    case 'BOOKED':
-      return 'disabled_by_default';
-    default:
-      return 'help';
-  }
-}
+// getSeatIcon(status: string): string {
+//   switch (status) {
+//     case 'AVAILABLE':
+//       return 'circle';
+//     case 'SELECTED':
+//       return 'circle';
+//     case 'BOOKED':
+//       return 'circle';
+//     default:
+//       return 'circle';
+//   }
+// }
 
 getSeatColour(status: string): string {
   switch (status) {
     case 'AVAILABLE':
-      return 'text-success ';
+      return 'seat-button seat-available';
     case 'SELECTED':
-      return 'text-primary ';
+      return 'seat-button seat-selected';
     case 'BOOKED':
-      return 'text-gray';
+      return 'seat-button seat-booked';
     default:
-      return 'text-success ';
+      return 'seat-button';
   }
 }
 

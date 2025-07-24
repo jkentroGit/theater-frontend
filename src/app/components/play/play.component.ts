@@ -53,11 +53,10 @@ onSubmit() {
       'cast':this.form.get('cast')?.value || '',
       'duration': this.form.get('duration')?.value || ''}
 
-
        this.playService.getPlayByCode(playData.code).subscribe({
-      next: () => {
 
-      this.snackBar.open('Ο κωδικός έργου πρέπει να είναι μοναδικός', 'Close', {
+      next: () => {
+      this.snackBar.open('Ο κωδικός έργου πρέπει να είναι μοναδικός', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',

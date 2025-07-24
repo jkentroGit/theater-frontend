@@ -1,23 +1,17 @@
-<div class="d-flex flex-column justify-content-center align-items-center  text-center px-2">
+<div class="d-flex flex-column justify-content-center align-items-center  text-center">
 
-  <div class="w-100 px-2 mb-3" style="overflow-x: auto;">
+  <div class="w-100" style="overflow-x: auto;">
     <div style="min-width: max-content;">
 
       <div class="text-center fw-bold bg-dark-subtle py-2 my-3" style="max-width: 500px; margin: 0 auto;">
         ΣΚΗΝΗ
       </div>
 
-      <!-- Seat rows -->
-      <div *ngFor="let row of seatingPlan" class="d-flex justify-content-center my-1">
+      <div *ngFor="let row of seatingPlan" class="d-flex justify-content-center">
         <ng-container *ngFor="let seat of row.seats">
-          <button
-            mat-icon-button
-            class="mx-0 p-0 "
+          <button [class]="getSeatColour(seat.status)"
             [disabled]="seat.status === 'BOOKED' && !authService.isAdmin()"
             (click)="handleSeatStatus(seat)">
-            <mat-icon [class]="getSeatColour(seat.status)">
-              {{ getSeatIcon(seat.status) }}
-            </mat-icon>
           </button>
         </ng-container>
       </div>

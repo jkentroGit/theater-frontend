@@ -106,7 +106,7 @@ export class RegisterComponent {
           });
           setTimeout(() => {
             this.router.navigate(['/app-login']);
-          }, 2000);
+          }, 3000);
         },
         error: () => {
           this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {

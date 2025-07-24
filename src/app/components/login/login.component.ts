@@ -62,14 +62,12 @@ onSubmit() {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-
       });
-
-      console.log(response.data)
-
       this.authService.login(response.data);
-      // // localStorage.setItem('token', response.data);
-      this.router.navigate(['app-play-list']);
+        setTimeout(() => {
+          this.router.navigate(['app-play-list']);
+        }, 2000);
+
       },
 
       error: (err) => {

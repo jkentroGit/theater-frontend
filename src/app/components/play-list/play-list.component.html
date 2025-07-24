@@ -1,4 +1,6 @@
   <mat-card *ngFor="let play of plays" class="mb-2">
+    <div class="d-flex flex-row justify-content-between align-items-center p-4">
+      <div>
     <mat-card-title class="m-4">
       <strong>{{ play.title }}</strong> ({{ play.year }})
     </mat-card-title>
@@ -14,10 +16,13 @@
       </p>
       <p><strong>Διάρκεια:</strong> {{ play.duration }} mins</p>
     </mat-card-content>
+
+      </div>
+      <div>
 <mat-card-actions class="m-4 text-center d-flex justify-content-center">
 
   <div class="d-none d-md-block">
-  <button class="mx-2"
+  <button class="m-2"
     mat-raised-button
     *ngIf="authService.isAdmin()"
     (click)="onEditPlay(play)"
@@ -25,7 +30,7 @@
     Επεξεργασία έργου
   </button>
 
-  <button class="mx-2"
+  <button class="m-2"
     mat-raised-button
     *ngIf="authService.isAdmin()"
     (click)="onDeletePlay(play)"
@@ -33,14 +38,14 @@
     Διαγραφή έργου
   </button>
 
-  <button class="mx-2"
+  <button class="m-2"
     mat-raised-button
     (click)="onFindShow(play)"
   >
     Εμφάνιση παραστάσεων
   </button>
 
-    <button class="mx-2"
+    <button class="m-2"
             mat-raised-button
             *ngIf="authService.isAdmin()"
             (click)="onAddShow(play)"
@@ -49,41 +54,43 @@
     </button>
   </div>
 
-  <div class="d-md-none d-flex gap-4">
-    <button class="px-2 text-center"
+  <div class="d-md-none d-flex flex-column justify-content-center gap-4">
+    <button
             mat-raised-button
             *ngIf="authService.isAdmin()"
             (click)="onEditPlay(play)"
             matTooltip="Επεξεργασία έργου"
     >
-      <mat-icon>edit</mat-icon>
+      <mat-icon class="mx-auto">edit</mat-icon>
     </button>
 
-    <button class=""
+    <button
             mat-raised-button
             *ngIf="authService.isAdmin()"
             (click)="onDeletePlay(play)"
             matTooltip="Διαγραφή έργου"
     >
-      <mat-icon>delete</mat-icon>
+      <mat-icon class="mx-auto">delete</mat-icon>
     </button>
 
-    <button class=""
+    <button
             mat-raised-button
             (click)="onFindShow(play)"
             matTooltip="Εμφάνιση παραστάσεων"
     >
-      <mat-icon>format_list_bulleted</mat-icon>
+      <mat-icon class="mx-auto">format_list_bulleted</mat-icon>
     </button>
 
-    <button class=""
+    <button
             mat-raised-button
             *ngIf="authService.isAdmin()"
             (click)="onAddShow(play)"
             matTooltip="Προσθήκη παραστάσεων"
     >
-      <mat-icon>add_circle</mat-icon>
+      <mat-icon class="mx-auto">add_circle</mat-icon>
     </button>
 
   </div>
 </mat-card-actions>
+      </div>
+    </div>
