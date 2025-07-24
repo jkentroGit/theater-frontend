@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { User } from '../shared/interfaces/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ export class AuthService {
 
   currentUser = signal<User | null>(this.getUserFromToken());
 
-  isAdmin = computed(() => this.currentUser()?.role === 'ADMIN'); //αλλαγή isAdmin με signal
+  isAdmin = signal<boolean>(this.currentUser()?.role === 'ADMIN');
 
   getAllUsers(): Observable<{ status: boolean; data: User[] }> {
     return this.http.get<{ status: boolean; data: User[] }>(this.baseUrl);

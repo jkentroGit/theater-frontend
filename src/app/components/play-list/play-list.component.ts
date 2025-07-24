@@ -75,7 +75,10 @@ export class PlayListComponent {
         error: () => {
           this.snackBar.open('Το έργο διαγράφηκε, αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000, horizontalPosition: 'right',
             verticalPosition: 'bottom' });
-          this.loadAllPlays();
+          setTimeout(() => {
+            this.loadAllPlays();
+          }, 2000);
+
         }
       });
     },
