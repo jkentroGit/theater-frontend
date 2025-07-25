@@ -100,7 +100,6 @@ onSubmit() {
           this.showService.createShow(showData).subscribe({
            next: (res) => {
 
-             //Προσθήκη μιας παράστασης//
 
            },
            error: (err) => {
@@ -113,7 +112,6 @@ onSubmit() {
           });
         }
       }
-        //Προσθήκη όλων των παραστάσεων//
             this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
                   duration: 3000,
                   horizontalPosition: 'right',

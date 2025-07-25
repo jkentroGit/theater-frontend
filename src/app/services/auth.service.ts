@@ -13,29 +13,35 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:3000/api/users';
 
-  constructor(private http: HttpClient,  private router: Router, private snackBar: MatSnackBar) {this.tokenWatcher()}
+  constructor(private http: HttpClient,  private router: Router, private snackBar: MatSnackBar) {
+    this.tokenWatcher();
+    setInterval(() => this.tokenWatcher(), 30 * 1000);}
 
   currentUser = signal<User | null>(this.getUserFromToken());
-
   isAdmin = computed(() => this.currentUser()?.role === 'ADMIN'); //computed αντι για signal
 
   private tokenWatcher() {
-    setInterval(() => {
-      const user = this.getUserFromToken();
+    const token = localStorage.getItem('token');
 
-      if (!user && this.currentUser()) {
+    if (!token) {
+      if (this.currentUser()) {
         this.logout();
-        this.snackBar.open('Ο χρόνος σύνδεσης έληξε. Παρακαλώ σθνδεθείτε ξανά', '', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom'
-        });
-        this.router.navigate(['/login']);
       }
+      return;
+    }
+    if (this.isTokenExpired(token)) {
 
-      this.currentUser.set(user);
+      this.snackBar.open('Ο χρόνος σύνδεσης έληξε. Παρακαλώ συνδεθείτε ξανά', '', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom'
+      });
 
-    }, 60 * 1000);
+      setTimeout(() => {
+       this.logout();
+      }, 3000);
+      return;
+    }
   }
 
   getAllUsers(): Observable<{ status: boolean; data: User[] }> {
@@ -62,6 +68,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.currentUser.set(null);
+    this.router.navigate(['/login']);
   }
 
   getUserByEmail(email: string): Observable<{ status: boolean; data: Play }> {
@@ -90,5 +97,18 @@ export class AuthService {
   mobile: '',
   password: ''
 };
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (!payload.exp) return false;
+
+      const expirationDate = new Date(0);
+      expirationDate.setUTCSeconds(payload.exp);
+      return expirationDate.valueOf() < new Date().valueOf();
+    } catch {
+      return true;
+    }
   }
 }
