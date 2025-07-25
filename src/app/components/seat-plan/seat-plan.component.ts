@@ -71,20 +71,6 @@ export class SeatPlanComponent {
     });
   }
 
-
-// getSeatIcon(status: string): string {
-//   switch (status) {
-//     case 'AVAILABLE':
-//       return 'circle';
-//     case 'SELECTED':
-//       return 'circle';
-//     case 'BOOKED':
-//       return 'circle';
-//     default:
-//       return 'circle';
-//   }
-// }
-
 getSeatColour(status: string): string {
   switch (status) {
     case 'AVAILABLE':
@@ -119,11 +105,12 @@ toggleAdmin(seat: Seat) {
     seat.status = 'AVAILABLE';
   }
   }
+
   onClickBack () {
     this.location.back();
   }
-onClickHandler() {
 
+onClickHandler() {
     const seatsToUpdate = [];
 
   for (const row of this.seatingPlan) {
@@ -152,9 +139,8 @@ onClickHandler() {
            duration: 3000,
            horizontalPosition: 'right',
            verticalPosition: 'bottom',
-         })
+         });
        }
-       ;
 
        if (this.authService.isAdmin()) {
          this.snackBar.open('Το πλάνο τροποποιήθηκε', '', {
@@ -162,7 +148,7 @@ onClickHandler() {
            horizontalPosition: 'right',
            verticalPosition: 'bottom',
          })
-         this.location.back();
+         location.reload();
        }
        ;
 

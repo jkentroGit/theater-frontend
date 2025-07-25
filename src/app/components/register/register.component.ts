@@ -93,7 +93,7 @@ export class RegisterComponent {
           city: this.form.controls.address.controls.city?.value || '',
           tk: this.form.controls.address.controls.tk?.value || ''
         },
-        role: isDBEmpty ? 'ADMIN' : 'USER',
+        role: isDBEmpty ? 'ADMIN' : this.authService.isAdmin() ? this.form.get('role')?.value || '' : 'USER',
         password: this.form.get('password')?.value || ''
       };
 
@@ -104,9 +104,15 @@ export class RegisterComponent {
             horizontalPosition: 'right',
             verticalPosition: 'bottom'
           });
+          if(!this.authService.isAdmin()) {
           setTimeout(() => {
             this.router.navigate(['/app-login']);
           }, 3000);
+          } else {
+            setTimeout(() => {
+              this.router.navigate(['/app-user-list']);
+            }, 3000);
+          }
         },
         error: () => {
           this.snackBar.open('Αποτυχία κατοχύρωσης χρήστη', '', {

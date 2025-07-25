@@ -1,8 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import { User } from '../shared/interfaces/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Play } from '../shared/interfaces/play';
+import {Router} from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable({ providedIn: 'root' })
 
@@ -10,11 +13,30 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:3000/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,  private router: Router, private snackBar: MatSnackBar) {this.tokenWatcher()}
 
   currentUser = signal<User | null>(this.getUserFromToken());
 
-  isAdmin = signal<boolean>(this.currentUser()?.role === 'ADMIN');
+  isAdmin = computed(() => this.currentUser()?.role === 'ADMIN'); //computed αντι για signal
+
+  private tokenWatcher() {
+    setInterval(() => {
+      const user = this.getUserFromToken();
+
+      if (!user && this.currentUser()) {
+        this.logout();
+        this.snackBar.open('Ο χρόνος σύνδεσης έληξε. Παρακαλώ σθνδεθείτε ξανά', '', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom'
+        });
+        this.router.navigate(['/login']);
+      }
+
+      this.currentUser.set(user);
+
+    }, 60 * 1000);
+  }
 
   getAllUsers(): Observable<{ status: boolean; data: User[] }> {
     return this.http.get<{ status: boolean; data: User[] }>(this.baseUrl);
