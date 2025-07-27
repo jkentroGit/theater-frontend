@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -36,11 +36,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent {
 
-    private http = inject(HttpClient);
-    constructor(private snackBar: MatSnackBar, private router: Router, public authService: AuthService) {}
-    private isDBEmpty: boolean = false;
-    private allUsers: User[] = [];
-
+    constructor(private snackBar: MatSnackBar, private router: Router, public authService: AuthService, 
+      private http: HttpClient) {}
 
     form =new FormGroup ({
     username: new FormControl ('', [Validators.required, Validators.maxLength(20)]),
@@ -72,11 +69,11 @@ export class RegisterComponent {
       return {passwordMismatch: true}
     }
     return null
-  }
+  };
 
   onSubmit() {
 
-    // Ο πρώτος χρήστης να γίνεται ADMIN
+    // Ο πρώτος χρήστης να γίνεται ADMIN αυτόματα
 
     this.authService.getAllUsers().subscribe((response) => {
       const isDBEmpty = response.data.length === 0;
@@ -123,6 +120,6 @@ export class RegisterComponent {
         }
       });
     });
-  }
+  };
 }
 

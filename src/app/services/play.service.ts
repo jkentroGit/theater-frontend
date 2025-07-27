@@ -25,18 +25,17 @@ export class PlayService {
   };
 
   createPlay(showData: Partial<Play>): Observable<any> {
-
-  const headers = this.authService.getAuthHeaders()
-  return this.http.post<{ status: boolean; data: Play }>(this.baseUrl, showData, { headers } );
+    const headers = this.authService.getAuthHeaders()
+    return this.http.post<{ status: boolean; data: Play }>(this.baseUrl, showData, { headers } );
   };
 
   updatePlay(code: string, playData: Play): Observable<any> {
     const headers = this.authService.getAuthHeaders()
     return this.http.put(`${this.baseUrl}/${code}`, playData, { headers });
-}
+  };
 
   deletePlay(code: string): Observable<any> {
     const headers = this.authService.getAuthHeaders()
-    return this.http.delete(`${this.baseUrl}/${code}`);
+    return this.http.delete(`${this.baseUrl}/${code}`, { headers });
   };
 }

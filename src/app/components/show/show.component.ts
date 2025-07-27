@@ -38,8 +38,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ShowComponent {
 
-constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {}
-
+constructor(private playService: PlayService, private showService: ShowService, private snackBar: MatSnackBar, 
+  private router: Router, private route: ActivatedRoute) {}
 
 days = [
   { label: 'Κυριακή', value: 0 },
@@ -52,7 +52,6 @@ days = [
 ];
 
   form =new FormGroup ({
-    // playCode: new FormControl ('', [Validators.required]),
     daysOfWeek: new FormControl ([], [Validators.required]),
     fromDate: new FormControl ('', Validators.required),
     toDate: new FormControl ('', Validators.required),
@@ -64,7 +63,6 @@ days = [
 onSubmit() {
 
   const code = this.route.snapshot.paramMap.get('code');
-  console.log(code)
 
   this.playService.getPlayByCode(code?.toUpperCase() || '').subscribe({
     next: (response) => {
@@ -73,13 +71,11 @@ onSubmit() {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-
       });
         return;
       }
 
       const playId = response.data._id!;
-
       const startDate = new Date(this.form.get('fromDate')!.value!);
       const endDate = new Date(this.form.get('toDate')!.value!);
       const selectedDays: number[] = this.form.get('daysOfWeek')!.value || [];
@@ -99,39 +95,34 @@ onSubmit() {
 
           this.showService.createShow(showData).subscribe({
            next: (res) => {
-
-
+            console.log('Προστέθηκε παράσταση')
            },
            error: (err) => {
             this.snackBar.open('Αποτυχία προσθήκης παραστάσεων', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-      });
-        }
           });
         }
-      }
+      });
+    }
+  }
             this.snackBar.open('Οι παραστάσεις προστέθηκαν επιτυχημένα', '', {
                   duration: 3000,
                   horizontalPosition: 'right',
                   verticalPosition: 'bottom'
-            });
+                });
 
     }, error: (err) => {
             this.snackBar.open('Το έργο δεν βρέθηκε', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-
-      });
+          });
     }
-
-
-   });
-
+  });
     setTimeout(() => {
     this.router.navigate(['/app-play-list']);
   }, 3000);
-}
+};
 }

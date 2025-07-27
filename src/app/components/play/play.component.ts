@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,6 @@ import {
   Validators
 } from '@angular/forms';
 import { Play } from '../../shared/interfaces/play';
-import { HttpClient } from '@angular/common/http';
 import { PlayService } from '../../services/play.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -30,7 +29,6 @@ import { Router } from '@angular/router';
 })
 export class PlayComponent {
 
-    private http = inject(HttpClient);
     constructor(private playService: PlayService, private snackBar: MatSnackBar, private router: Router) {}
 
    form =new FormGroup ({
@@ -83,7 +81,7 @@ onSubmit() {
             });
           }
         });
-      } else {
+      }else {
         //αν είναι άλλο το error//
         this.snackBar.open('Λάθος. Δοκιμάστε ξανά', '', {
           duration: 3000,
@@ -94,5 +92,5 @@ onSubmit() {
     }
   });
 
-}
+};
 }

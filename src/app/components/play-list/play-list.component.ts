@@ -33,7 +33,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class PlayListComponent {
 
-
   constructor(private router: Router, private snackBar: MatSnackBar,
     public authService: AuthService, private playService: PlayService, private showService: ShowService, ) {}
 
@@ -48,23 +47,21 @@ export class PlayListComponent {
       this.snackBar.open('Αποτυχία εύρεσης παραστάσεων', '', { duration: 3000 });
     }
   });
-}
+};
 
   ngOnInit(): void {
 
  this.loadAllPlays();
-
-  }
+};
 
   onEditPlay(play: Play) {
   this.router.navigate(['/play/edit', play.code]);
-  }
+};
 
   onDeletePlay(play: Play) {
 
   this.playService.deletePlay(play.code!).subscribe({
     next: () => {
-
       this.showService.deleteShowsByPlayId(play._id!).subscribe({
         next: (res) => {
           this.snackBar.open('Διαγράφηκαν παραστάσεις', '', { duration: 3000, horizontalPosition: 'right',
@@ -73,7 +70,7 @@ export class PlayListComponent {
           this.loadAllPlays();
         },
         error: () => {
-          this.snackBar.open('Το έργο διαγράφηκε, αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000, horizontalPosition: 'right',
+          this.snackBar.open('Το έργο διαγράφηκε αλλά απέτυχε η διαγραφή των παραστάσεων', '', { duration: 3000, horizontalPosition: 'right',
             verticalPosition: 'bottom' });
           setTimeout(() => {
             this.loadAllPlays();
@@ -87,13 +84,13 @@ export class PlayListComponent {
         verticalPosition: 'bottom' });
     }
   });
-}
+};
 
   onFindShow(play: Play) {
   this.router.navigate(['/show/find', play.code]);
-  }
+};
 
   onAddShow(play: Play) {
   this.router.navigate(['app-show', play.code]);
-}
+};
 }

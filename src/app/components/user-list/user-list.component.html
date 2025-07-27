@@ -1,0 +1,66 @@
+<div class="table-responsive">
+  <table mat-table [dataSource]="users" class="table table-hover mb-0">
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-light"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Username</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        {{user.username}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fullname">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Ονματεπώνυμο</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        {{user.firstname}} {{user.lastname}}
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Διεύθυνση</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        <div class="d-flex flex-wrap gap-1">
+          <span>{{user.address.street}} {{user.address.streetNum}},</span>
+          <span>{{user.address.city}} {{user.address.tk}}</span>
+        </div>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Email</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        {{user.email}}
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Κινητό</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        {{user.mobile}}
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Ρόλος</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        <span class="badge text-bg-secondary">{{user.role}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="fw-semibold">Διαγραφή</th>
+      <td mat-cell *matCellDef="let user" class="align-middle">
+        <button mat-icon-button color="warn" (click)="onDeleteUser(user)"
+                class="btn btn-sm btn-outline-danger" title="Διαγραφή χρήστη">
+          <mat-icon>delete </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  </table>
+</div>

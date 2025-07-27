@@ -22,18 +22,16 @@ export class SeatPlanComponent {
   seatingPlan: Row[] = [];
   showId!: string;
 
-  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,private location: Location, public authService: AuthService, private dialog: MatDialog) {}
+  constructor(private showService: ShowService, private snackBar: MatSnackBar, private route: ActivatedRoute,
+    private location: Location, public authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.showId = this.route.snapshot.paramMap.get('id')!;
-
     if (this.showId) {
     this.loadSeatingPlan(this.showId); }
-
-   }
+  };
 
   openDialog() {
-
     this.dialog.open(ConfirmDialogComponent, {
       width: '400px'
     }).afterClosed().subscribe(result => {
@@ -44,7 +42,7 @@ export class SeatPlanComponent {
         this.location.back();
       }
     });
-  }
+  };
 
   loadSeatingPlan(showId: string) {
     this.showService.getShowById(showId!).subscribe({
@@ -69,7 +67,7 @@ export class SeatPlanComponent {
         });
       }
     });
-  }
+  };
 
 getSeatColour(status: string): string {
   switch (status) {
@@ -82,7 +80,7 @@ getSeatColour(status: string): string {
     default:
       return 'seat-button';
   }
-}
+};
 
 handleSeatStatus(seat: any) {
   if (this.authService.isAdmin()) {
@@ -90,13 +88,15 @@ handleSeatStatus(seat: any) {
   } else {
     this.toggleSeatStatus(seat);
   }
-}
+};
+
 toggleSeatStatus(seat: Seat) {
   if (seat.status === 'AVAILABLE') {
     seat.status = 'SELECTED';
   } else if (seat.status === 'SELECTED') {
     seat.status = 'AVAILABLE';
-  }}
+  }
+};
 
 toggleAdmin(seat: Seat) {
   if (seat.status === 'AVAILABLE') {
@@ -104,14 +104,14 @@ toggleAdmin(seat: Seat) {
   } else if (seat.status === 'BOOKED') {
     seat.status = 'AVAILABLE';
   }
-  }
+};
 
   onClickBack () {
     this.location.back();
-  }
+};
 
 onClickHandler() {
-    const seatsToUpdate = [];
+  const seatsToUpdate = [];
 
   for (const row of this.seatingPlan) {
     for (const seat of row.seats) {
@@ -149,20 +149,16 @@ onClickHandler() {
            verticalPosition: 'bottom',
          })
          location.reload();
-       }
-       ;
-
-
+       };
      },
      error: (err) => {
        this.snackBar.open('Οι κράτηση δεν είναι έγκυρη', '', {
          duration: 3000,
          horizontalPosition: 'right',
          verticalPosition: 'bottom',
-
        });
      }
    });
   this.location.back();
-}
+};
 }

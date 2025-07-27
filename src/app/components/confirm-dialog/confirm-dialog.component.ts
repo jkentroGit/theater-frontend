@@ -11,16 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule, MatButtonModule
   ],
 })
+
 export class ConfirmDialogComponent {
-  constructor(
-    private dialogRef: MatDialogRef<ConfirmDialogComponent>,
-  ) {}
+  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>,) {}
 
   confirm() {
     this.dialogRef.close(true);
-  }
+  };
 
   cancel() {
     this.dialogRef.close(false);
-  }
+  };
 }

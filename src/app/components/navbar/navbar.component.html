@@ -30,7 +30,8 @@
       <button class="btn btn-sm btn-outline-light ms-2 text-center" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</button>
 
     </div>
-
+    
+<!-- Εμφανίζει κάποιες επιλογές μόνο για admin -->
     <div class="d-md-none d-flex text-center justify-content-center">
     <button mat-button class="btn-sm btn-outline-light ms-2 text-black"
             *ngIf="authService.isAdmin()"

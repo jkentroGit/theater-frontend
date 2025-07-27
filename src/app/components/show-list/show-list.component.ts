@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CommonModule, Location} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -74,88 +74,91 @@ export class ShowListComponent {
         }
       });
     }
-  }
+  };
 
+  onEditShow(show: Show) {
+    this.router.navigate(['/show/edit', show._id]);
+  };
 
-onEditShow(show: Show) {
-  this.router.navigate(['/show/edit', show._id]);
-  }
+  onDeleteShow(show: Show) {
 
-onDeleteShow(show: Show) {
-
-    if (!show._id) {
-    this.snackBar.open('Η παράσταση δεν έχει έγκυρο ID', '', { duration: 3000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom' });
-    return;
-  }
-
-   this.showService.deleteShow(show._id).subscribe({
-    next: (res) => {
-      this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000,
+      if (!show._id) {
+      this.snackBar.open('Η παράσταση δεν έχει έγκυρο ID', '', { duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom' });
-      this.loadPlayShows();
-
-    },
-    error: (err) => {
-      this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom' });
+      return;
     }
-  });
-  }
-
-loadPlayShows() {
-  this.showService.getAllShows().subscribe({
-    next: (res) => {
-       this.shows = res.data.filter(show => show.playId === this.playId)
-         .sort((a, b) => new Date(a.showDate).getTime() - new Date(b.showDate).getTime());
-      for (const show of this.shows) {
-        this.watchAvailability(show);
-      }
-    },
-    error: (err) => {
-      console.error('Failed to load shows', err);
-    }
-  });
-}
-
-login () {
-  this.router.navigate(['app-login']);
-}
-
-watchAvailability(show: Show) {
-
-    let seatCounter = 0;
-    let bookedCounter = 0;
-
-    this.showService.getShowById(show._id!).subscribe({
+    this.showService.deleteShow(show._id).subscribe({
       next: (res) => {
-        const showData = res.data;
-        const rows = showData.rows;
-        for (const row in rows) {
-          const seats = rows[row].seats;
-          for (const seat in seats) {
-              seatCounter++;
-            if (seats[seat].status === 'BOOKED') {
-              bookedCounter++;
+        this.snackBar.open('Η παράσταση διαγράφηκε', '', { duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom' });
+        this.loadPlayShows();
+
+      },
+      error: (err) => {
+        this.snackBar.open('Η παράσταση δεν διαγράφηκε', '', { duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom' });
+      }
+    });
+  };
+
+  loadPlayShows() {
+    this.showService.getAllShows().subscribe({
+      next: (res) => {
+
+        //Ταξινομημένα ανά ημερομηνία//
+        this.shows = res.data.filter(show => show.playId === this.playId)
+          .sort((a, b) => new Date(a.showDate).getTime() - new Date(b.showDate).getTime());
+        for (const show of this.shows) {
+          this.watchAvailability(show);
+        }
+      },
+      error: (err) => {
+        this.snackBar.open('Αποτυχία εύρεσης παραστάσεων', '', { duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom' });
+      }
+    });
+  };
+
+  login () {
+    this.router.navigate(['app-login']);
+  };
+
+  //Διαθεσιμότητα θέσεων//
+  watchAvailability(show: Show) {
+
+      let seatCounter = 0;
+      let bookedCounter = 0;
+
+      this.showService.getShowById(show._id!).subscribe({
+        next: (res) => {
+          const showData = res.data;
+          const rows = showData.rows;
+          for (const row in rows) {
+            const seats = rows[row].seats;
+            for (const seat in seats) {
+                seatCounter++;
+              if (seats[seat].status === 'BOOKED') {
+                bookedCounter++;
+              }
             }
           }
+          if (bookedCounter !== 0 && seatCounter === bookedCounter) {
+            show.cardColour = "red-card";
+          } else if (bookedCounter !== 0 && (seatCounter / bookedCounter) < 2) {
+            show.cardColour = "yellow-card";
+          } else {
+            show.cardColour = "green-card";
+          }
+      },
+        error: (err) => {
+          console.error('Failed to load shows', err);
         }
-        if (bookedCounter !== 0 && seatCounter === bookedCounter) {
-          show.cardColour = "red-card";
-        } else if (bookedCounter !== 0 && (seatCounter / bookedCounter) < 2) {
-          show.cardColour = "yellow-card";
-        } else {
-          show.cardColour = "green-card";
-        }
-    },
-      error: (err) => {
-        console.error('Failed to load shows', err);
-      }
-})
-}
-}
+  })
+  };
+  }
 
 

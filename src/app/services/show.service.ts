@@ -14,35 +14,30 @@ export class ShowService {
 
   getAllShows(): Observable<{ status: boolean; data: Show[] }> {
     return this.http.get<{ status: boolean; data: Show[] }>(this.baseUrl);
-  }
+  };
 
   getShowById(id: string): Observable<{ status: boolean; data: Show }> {
     return this.http.get<{ status: boolean; data: Show }>(`${this.baseUrl}/${id}`);
-  }
-
+  };
 
   updateSeats(showId: string, seatsToUpdate: { label: string; status: string }[]): Observable<any> {
     const headers = this.authService.getAuthHeaders()
-    return this.http.put(`${this.baseUrl}/${showId}`, { seatsToUpdate }, { headers }
-  );
-}
+    return this.http.put(`${this.baseUrl}/${showId}`, { seatsToUpdate }, { headers })
+  };
 
-deleteShow(showId: string): Observable<any> {
-
-  const headers = this.authService.getAuthHeaders()
-  return this.http.delete(`${this.baseUrl}/${showId}`, { headers });
-  }
-
+  deleteShow(showId: string): Observable<any> {
+    const headers = this.authService.getAuthHeaders()
+    return this.http.delete(`${this.baseUrl}/${showId}`, { headers });
+  };
 
   createShow(showData: Show): Observable<any> {
     const headers = this.authService.getAuthHeaders()
-    return this.http.post(`${this.baseUrl}`,  showData , { headers });
-}
-
+    return this.http.post(`${this.baseUrl}`,showData, { headers });
+  };
 
   deleteShowsByPlayId(playId: string): Observable<any> {
     const headers = this.authService.getAuthHeaders()
     return this.http.delete(`${this.baseUrl}/by-play-id/${playId}`, { headers });
-}
+  };
 }
 

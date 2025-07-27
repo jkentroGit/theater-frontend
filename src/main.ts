@@ -11,7 +11,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     ...(appConfig.providers || []),
     provideAnimations(),
-    { provide: LOCALE_ID, useValue: 'el' }
+    { provide: LOCALE_ID, useValue: 'el' } //Ελληνική ημερομηνία
   ]
 }).catch((err) => console.error(err));
 

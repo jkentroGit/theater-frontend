@@ -47,7 +47,7 @@ export class PlayEditComponent {
         }
       });
     }
-  }
+  };
 
    form =new FormGroup ({
     code: new FormControl ('', [Validators.required]),
@@ -72,19 +72,18 @@ onSubmit() {
     duration: rawValue.duration || ''
   };
 
-
     this.playService.updatePlay(playData.code, playData).subscribe({
       next: () => {
-        this.snackBar.open('Το έργο κατοχηρώθηκε επιτυχημένα', '', { duration: 3000,  horizontalPosition: 'right',
+        this.snackBar.open('Το έργο κατοχυρώθηκε επιτυχημένα', '', { duration: 3000,  horizontalPosition: 'right',
           verticalPosition: 'bottom'
         });
         this.router.navigate(['/app-play-list']);
       },
       error: () => {
-        this.snackBar.open('Αποτυχία κατοχήρωσης έργου', '', { duration: 3000,  horizontalPosition: 'right',
+        this.snackBar.open('Αποτυχία κατοχύρωσης έργου', '', { duration: 3000,  horizontalPosition: 'right',
           verticalPosition: 'bottom'
         });
       }
     });
-  }
+  };
 }

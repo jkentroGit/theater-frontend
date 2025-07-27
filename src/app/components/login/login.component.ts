@@ -29,10 +29,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService, private http: HttpClient) {}
-
-
-
+  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService, 
+    private http: HttpClient) {}
 
   form = new FormGroup ({
     username: new FormControl ('', [Validators.required, Validators.maxLength(20)]),
@@ -41,10 +39,8 @@ export class LoginComponent {
 );
 
 register() {
-
 this.router.navigate(['app-register']);
-
-}
+};
 
 onSubmit() {
   if (this.form.invalid) {
@@ -69,15 +65,13 @@ onSubmit() {
         }, 2000);
 
       },
-
       error: (err) => {
         this.snackBar.open('Αποτυχία σύνδεσης', '', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'bottom',
-
       });
       this.form.reset();}
     });
-  }
+  };
 };

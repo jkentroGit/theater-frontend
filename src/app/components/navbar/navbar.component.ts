@@ -20,16 +20,14 @@ export class NavbarComponent {
 
   username: string = '';
 
-
     logout() {
       this.authService.logout();
       this.snackBar.open('Επιτυχής αποσύνδεση', '', { duration: 3000,  horizontalPosition: 'right',
         verticalPosition: 'bottom',});
       this.router.navigate(['app-login']);
-    }
+    };
 
     login() {
       this.router.navigate(['app-login']);
-    }
-
+    };
 }
