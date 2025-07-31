@@ -110,6 +110,12 @@ toggleAdmin(seat: Seat) {
     this.location.back();
 };
 
+hasSelectedSeats(): boolean {
+  return this.seatingPlan.some(row =>
+    row.seats.some(seat => seat.status === 'SELECTED')
+  );
+}
+
 onClickHandler() {
   const seatsToUpdate = [];
 

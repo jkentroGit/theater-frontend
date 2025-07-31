@@ -24,6 +24,7 @@
     <button
       *ngIf="!authService.isAdmin()"
       class="btn btn-primary mx-2 my-1"
+      [disabled]="!hasSelectedSeats()"
       (click)="openDialog()">
       Κράτηση θέσεων
     </button>

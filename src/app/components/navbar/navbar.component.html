@@ -26,8 +26,8 @@
     <div class="d-none d-md-block">
         <button class="btn btn-sm btn-outline-light ms-2 text-black text-center" role="button"  *ngIf="authService.isAdmin()" [routerLink]="['app-register']" [routerLinkActive] = "['active']">Δημιουργία χρήστη</button>
         <button class="btn btn-sm btn-outline-light ms-2 text-black text-center" role="button" *ngIf="authService.isAdmin()" [routerLink]="['app-play']" [routerLinkActive] = "['active']">Προσθήκη έργου</button>
-      <button class="btn btn-sm btn-outline-light ms-2 text-center" role="button"  *ngIf="authService.isAdmin()" [routerLink]="['app-user-list']" [routerLinkActive] = "['active']">Λίστα χρηστών</button>
-      <button class="btn btn-sm btn-outline-light ms-2 text-center" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</button>
+        <button class="btn btn-sm btn-outline-light ms-2 text-center" role="button"  *ngIf="authService.isAdmin()" [routerLink]="['app-user-list']" [routerLinkActive] = "['active']">Λίστα χρηστών</button>
+       <button class="btn btn-sm btn-outline-light ms-2 text-center" role="button"[routerLink]="['app-play-list']" [routerLinkActive] = "['active']">Λίστα έργων</button>
 
     </div>
     
@@ -50,6 +50,7 @@
     </button>
 
       <button mat-button class="btn-sm btn-outline-light ms-2 text-black"
+              *ngIf="authService.isAdmin()"
               [routerLink]="['app-user-list']"
               [routerLinkActive]="['active']"
               matTooltip="Λίστα χρηστών">
@@ -62,10 +63,6 @@
             matTooltip="Λίστα έργων">
       <mat-icon>list_alt</mat-icon>
     </button>
-
-
-
   </div>
-
 </nav>
 
